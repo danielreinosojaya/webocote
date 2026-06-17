@@ -672,6 +672,69 @@ a:hover {
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
+.menu-layout {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.menu-grid--duo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.menu-panel--full {
+  grid-column: 1 / -1;
+}
+
+.menu-cocktails {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.menu-subhead {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.menu-subhead + .menu-subhead,
+.menu-subhead:not(:first-child) {
+  margin-top: 1.25rem;
+}
+
+.menu-item__title {
+  display: block;
+  color: var(--fg);
+  margin-bottom: 0.2rem;
+}
+
+.menu-item__meta {
+  display: block;
+  font-size: 0.86rem;
+  color: var(--fg-muted);
+  line-height: 1.5;
+}
+
+.menu-notes {
+  margin: 1rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+  color: var(--fg-muted);
+  display: grid;
+  gap: 0.4rem;
+}
+
+.menu-footnote {
+  margin: 1.25rem 0 0;
+  font-size: 0.84rem;
+  color: var(--fg-muted);
+  font-style: italic;
+}
+
 .menu-panel {
   border: 1px solid var(--line);
   border-radius: 1.25rem;
@@ -717,6 +780,13 @@ a:hover {
   font-size: 0.92rem;
 }
 
+.menu-list strong small {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+
 .section--gridline {
   position: relative;
 }
@@ -747,6 +817,14 @@ a:hover {
   }
 
   .menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-grid--duo {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-cocktails {
     grid-template-columns: 1fr;
   }
 
