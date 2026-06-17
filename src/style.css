@@ -42,6 +42,11 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: clip;
+  width: 100%;
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
@@ -49,6 +54,11 @@ html.lenis body {
 
 body {
   margin: 0;
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  touch-action: pan-y;
+  overscroll-behavior-x: none;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-mono);
@@ -56,6 +66,11 @@ body {
   line-height: 1.65;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+#contenido {
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 img {
@@ -99,13 +114,22 @@ a:hover {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
 }
 
-/* Header */
-.site-header {
-  position: -webkit-sticky;
-  position: sticky;
+/* Header — shell fija (iOS / Android) */
+.site-top {
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  padding: max(1.1rem, env(safe-area-inset-top, 0px)) clamp(1rem, 4vw, 2.5rem) 1.1rem;
+  width: 100%;
+  max-width: 100%;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.site-header {
+  position: relative;
+  width: 100%;
+  padding: 1.1rem clamp(1rem, 4vw, 2.5rem);
   background: rgba(7, 6, 5, 0.98);
   border-bottom: 1px solid rgba(243, 238, 230, 0.14);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
@@ -114,25 +138,9 @@ a:hover {
 }
 
 .site-header-spacer {
-  display: none;
+  display: block;
   height: var(--header-offset, 4.25rem);
   pointer-events: none;
-}
-
-@media (max-width: 899px) {
-  .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-
-  .site-header-spacer {
-    display: block;
-  }
 }
 
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -269,21 +277,11 @@ a:hover {
 /* Hero */
 .hero {
   position: relative;
-  margin-top: calc(var(--header-offset) * -1);
-  min-height: 100svh;
+  min-height: calc(100dvh - var(--header-offset, 4.25rem));
   display: grid;
   align-items: end;
-  padding: calc(clamp(2.5rem, 6vw, 4rem) + var(--header-offset)) clamp(1rem, 5vw, 4rem)
-    clamp(2.5rem, 6vw, 4rem);
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(1rem, 5vw, 4rem);
   overflow: clip;
-}
-
-@media (max-width: 899px) {
-  .hero {
-    margin-top: 0;
-    min-height: calc(100svh - var(--header-offset, 4.25rem));
-    padding: clamp(2.5rem, 6vw, 4rem) clamp(1rem, 5vw, 4rem);
-  }
 }
 
 .hero__media {
@@ -694,6 +692,7 @@ a:hover {
 .section--menu {
   max-width: 120rem;
   margin: 0 auto;
+  overflow-x: clip;
 }
 
 .hours-card {
@@ -740,8 +739,8 @@ a:hover {
   position: sticky;
   top: var(--header-offset);
   z-index: 50;
-  margin: 0 calc(-1 * clamp(1rem, 5vw, 4rem)) clamp(0.75rem, 2vw, 1.25rem);
-  padding: 0.5rem clamp(1rem, 5vw, 4rem) 0.7rem;
+  margin: 0 0 clamp(0.75rem, 2vw, 1.25rem);
+  padding: 0.5rem 0 0.7rem;
   background: var(--bg);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
@@ -1013,6 +1012,7 @@ a:hover {
 .section--gallery {
   max-width: 120rem;
   margin: 0 auto;
+  overflow-x: clip;
 }
 
 .h-scroll {
@@ -1112,6 +1112,7 @@ a:hover {
 
 .section--ember {
   position: relative;
+  overflow: clip;
 }
 
 .section--ember::after {

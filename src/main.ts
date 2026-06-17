@@ -5,10 +5,11 @@ import "./style.css";
 initCookieConsent();
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const prefersCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-const prefersNoHover = window.matchMedia("(hover: none)").matches;
-const useLenis = !prefersReducedMotion && !prefersCoarsePointer && !prefersNoHover;
+const canUseLenis = window.matchMedia("(min-width: 900px) and (hover: hover) and (pointer: fine)")
+  .matches;
+const useLenis = !prefersReducedMotion && canUseLenis;
 
+const siteTop = document.querySelector<HTMLElement>("[data-site-top]");
 const header = document.querySelector<HTMLElement>("[data-header]");
 const headerSpacer = document.querySelector<HTMLElement>("[data-header-spacer]");
 const menuNav = document.querySelector<HTMLElement>("[data-menu-nav]");
@@ -45,13 +46,15 @@ function updateHeader() {
   header.classList.toggle("is-scrolled", y > 32);
 }
 
+function getHeaderHeight() {
+  return siteTop?.offsetHeight ?? header?.offsetHeight ?? 72;
+}
+
 function updateLayoutVars() {
-  if (header) {
-    const height = header.offsetHeight;
-    document.documentElement.style.setProperty("--header-offset", `${height}px`);
-    if (headerSpacer && window.matchMedia("(max-width: 899px)").matches) {
-      headerSpacer.style.height = `${height}px`;
-    }
+  const height = getHeaderHeight();
+  document.documentElement.style.setProperty("--header-offset", `${height}px`);
+  if (headerSpacer) {
+    headerSpacer.style.height = `${height}px`;
   }
   if (menuNav) {
     document.documentElement.style.setProperty("--menu-nav-offset", `${menuNav.offsetHeight}px`);
@@ -59,8 +62,8 @@ function updateLayoutVars() {
 }
 
 function updateMenuNavStuck() {
-  if (!menuNav || !menuNavSentinel || !header) return;
-  const inset = header.offsetHeight;
+  if (!menuNav || !menuNavSentinel) return;
+  const inset = getHeaderHeight();
   menuNav.classList.toggle("is-stuck", menuNavSentinel.getBoundingClientRect().top <= inset);
 }
 
@@ -78,6 +81,10 @@ if (lenis) {
 updateLayoutVars();
 window.addEventListener("resize", updateLayoutVars, { passive: true });
 document.fonts?.ready.then(updateLayoutVars);
+if (siteTop && "ResizeObserver" in window) {
+  const topObserver = new ResizeObserver(() => updateLayoutVars());
+  topObserver.observe(siteTop);
+}
 onScroll();
 
 function getScrollOffset(el: HTMLElement) {
@@ -118,7 +125,7 @@ const menuSections = Array.from(
 const menuChips = Array.from(document.querySelectorAll<HTMLAnchorElement>(".menu-nav__chip"));
 
 function getMenuSpyInset() {
-  const headerHeight = header?.offsetHeight ?? 72;
+  const headerHeight = getHeaderHeight();
   const navHeight = menuNav?.offsetHeight ?? 44;
   return headerHeight + navHeight + 12;
 }
