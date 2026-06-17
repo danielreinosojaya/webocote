@@ -101,17 +101,48 @@ a:hover {
 
 /* Header */
 .site-header {
-  position: fixed;
-  inset: 0 0 auto;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   z-index: 100;
   padding: max(1.1rem, env(safe-area-inset-top, 0px)) clamp(1rem, 4vw, 2.5rem) 1.1rem;
-  background: rgba(7, 6, 5, 0.94);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(7, 6, 5, 0.98);
   border-bottom: 1px solid rgba(243, 238, 230, 0.14);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
   transition: background 0.45s var(--ease-out), border-color 0.45s var(--ease-out),
     box-shadow 0.45s var(--ease-out);
+}
+
+.site-header-spacer {
+  display: none;
+  height: var(--header-offset, 4.25rem);
+  pointer-events: none;
+}
+
+@media (max-width: 899px) {
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .site-header-spacer {
+    display: block;
+  }
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  @media (hover: hover) and (pointer: fine) {
+    .site-header {
+      background: rgba(7, 6, 5, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+  }
 }
 
 .site-header.is-scrolled {
@@ -238,11 +269,21 @@ a:hover {
 /* Hero */
 .hero {
   position: relative;
+  margin-top: calc(var(--header-offset) * -1);
   min-height: 100svh;
   display: grid;
   align-items: end;
-  padding: clamp(5rem, 14vw, 9rem) clamp(1rem, 5vw, 4rem) clamp(2.5rem, 6vw, 4rem);
+  padding: calc(clamp(2.5rem, 6vw, 4rem) + var(--header-offset)) clamp(1rem, 5vw, 4rem)
+    clamp(2.5rem, 6vw, 4rem);
   overflow: clip;
+}
+
+@media (max-width: 899px) {
+  .hero {
+    margin-top: 0;
+    min-height: calc(100svh - var(--header-offset, 4.25rem));
+    padding: clamp(2.5rem, 6vw, 4rem) clamp(1rem, 5vw, 4rem);
+  }
 }
 
 .hero__media {
@@ -695,14 +736,26 @@ a:hover {
 }
 
 .menu-nav {
+  position: -webkit-sticky;
   position: sticky;
   top: var(--header-offset);
-  z-index: 25;
-  margin: 0 0 clamp(0.75rem, 2vw, 1.25rem);
-  padding: 0.35rem 0 0.65rem;
-  background: linear-gradient(180deg, var(--bg) 62%, rgba(7, 6, 5, 0));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  z-index: 50;
+  margin: 0 calc(-1 * clamp(1rem, 5vw, 4rem)) clamp(0.75rem, 2vw, 1.25rem);
+  padding: 0.5rem clamp(1rem, 5vw, 4rem) 0.7rem;
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.menu-nav.is-stuck {
+  border-bottom-color: var(--line);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.42);
+}
+
+.menu-nav-sentinel {
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
 }
 
 .menu-nav__track {

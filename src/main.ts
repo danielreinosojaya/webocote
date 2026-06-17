@@ -6,8 +6,13 @@ initCookieConsent();
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const prefersCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+const prefersNoHover = window.matchMedia("(hover: none)").matches;
+const useLenis = !prefersReducedMotion && !prefersCoarsePointer && !prefersNoHover;
 
 const header = document.querySelector<HTMLElement>("[data-header]");
+const headerSpacer = document.querySelector<HTMLElement>("[data-header-spacer]");
+const menuNav = document.querySelector<HTMLElement>("[data-menu-nav]");
+const menuNavSentinel = document.querySelector<HTMLElement>("[data-menu-nav-sentinel]");
 const parallaxWrap = document.querySelector<HTMLElement>("[data-parallax-wrap]");
 const parallaxImg = parallaxWrap?.querySelector<HTMLImageElement>("[data-parallax]");
 const yearEl = document.querySelector<HTMLElement>("[data-year]");
@@ -16,9 +21,9 @@ if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
 }
 
-/* Smooth scroll (desktop only — native scroll keeps fixed header reliable on touch) */
+/* Smooth scroll (desktop pointer only — touch usa scroll nativo) */
 let lenis: Lenis | null = null;
-if (!prefersReducedMotion && !prefersCoarsePointer) {
+if (useLenis) {
   lenis = new Lenis({
     duration: 1.15,
     smoothWheel: true,
@@ -33,19 +38,47 @@ if (!prefersReducedMotion && !prefersCoarsePointer) {
   requestAnimationFrame(raf);
 }
 
-/* Header state */
+/* Header + layout */
 function updateHeader() {
   if (!header) return;
   const y = lenis ? lenis.animatedScroll : window.scrollY;
   header.classList.toggle("is-scrolled", y > 32);
 }
 
-if (lenis) {
-  lenis.on("scroll", updateHeader);
-} else {
-  window.addEventListener("scroll", updateHeader, { passive: true });
+function updateLayoutVars() {
+  if (header) {
+    const height = header.offsetHeight;
+    document.documentElement.style.setProperty("--header-offset", `${height}px`);
+    if (headerSpacer && window.matchMedia("(max-width: 899px)").matches) {
+      headerSpacer.style.height = `${height}px`;
+    }
+  }
+  if (menuNav) {
+    document.documentElement.style.setProperty("--menu-nav-offset", `${menuNav.offsetHeight}px`);
+  }
 }
-updateHeader();
+
+function updateMenuNavStuck() {
+  if (!menuNav || !menuNavSentinel || !header) return;
+  const inset = header.offsetHeight;
+  menuNav.classList.toggle("is-stuck", menuNavSentinel.getBoundingClientRect().top <= inset);
+}
+
+function onScroll() {
+  updateHeader();
+  updateMenuNavStuck();
+}
+
+if (lenis) {
+  lenis.on("scroll", onScroll);
+} else {
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+updateLayoutVars();
+window.addEventListener("resize", updateLayoutVars, { passive: true });
+document.fonts?.ready.then(updateLayoutVars);
+onScroll();
 
 function getScrollOffset(el: HTMLElement) {
   const margin = Number.parseFloat(getComputedStyle(el).scrollMarginTop);
@@ -79,7 +112,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 });
 
 /* Menu section chips — active state while scrolling */
-const menuNav = document.querySelector<HTMLElement>("[data-menu-nav]");
 const menuSections = Array.from(
   document.querySelectorAll<HTMLElement>("[data-menu-section]"),
 );
@@ -126,7 +158,7 @@ if (menuSections.length) {
     window.addEventListener("scroll", onMenuSpy, { passive: true });
   }
   window.addEventListener("resize", onMenuSpy, { passive: true });
-  updateMenuNavActive();
+  onMenuSpy();
 }
 
 /* Scroll reveals */
