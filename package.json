@@ -1,0 +1,20 @@
+{
+  "name": "ocote-madrid",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "lenis": "^1.2.3"
+  }
+}

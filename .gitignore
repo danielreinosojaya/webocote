@@ -1,0 +1,17 @@
+# Local archives (full kit; web subset lives in public/brand/source)
+OCOTE-*.zip
+
+.DS_Store
+**/.DS_Store
+
+# Common web build outputs
+node_modules/
+dist/
+.next/
+.nuxt/
+.output/
+.vercel/
+*.log
+
+# Full brand kit archive (use scripts/extract-brand-assets.py locally)
+public/brand/source/

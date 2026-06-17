@@ -1,0 +1,16 @@
+{
+  "name": "Ocote Madrid",
+  "short_name": "Ocote",
+  "description": "Ocote Madrid - cocina de brasa, tacos y mezcal.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070605",
+  "theme_color": "#070605",
+  "icons": [
+    {
+      "src": "/web/media/logo-dark.png",
+      "sizes": "342x141",
+      "type": "image/png"
+    }
+  ]
+}

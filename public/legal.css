@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+  background: #070605;
+  color: #f3eee6;
+  line-height: 1.65;
+}
+
+.legal {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4rem;
+}
+
+.legal h1,
+.legal h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.legal h1 {
+  margin: 0 0 0.5rem;
+}
+
+.legal h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.legal p,
+.legal li {
+  color: rgba(243, 238, 230, 0.82);
+}
+
+.legal a {
+  color: #8fd17a;
+}
+
+.legal__updated {
+  font-size: 0.85rem;
+  color: rgba(243, 238, 230, 0.55);
+}
+
+.legal__nav {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(243, 238, 230, 0.12);
+}
+
+.legal__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.legal__table th,
+.legal__table td {
+  border: 1px solid rgba(243, 238, 230, 0.12);
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.legal__table th {
+  color: #8fd17a;
+  font-weight: 600;
+}
+
+code {
+  font-size: 0.85em;
+  color: #8fd17a;
+}
