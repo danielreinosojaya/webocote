@@ -9,6 +9,11 @@ const canUseLenis = window.matchMedia("(min-width: 900px) and (hover: hover) and
   .matches;
 const useLenis = !prefersReducedMotion && canUseLenis;
 
+const menuSection = document.getElementById("menu");
+const menuBody = document.querySelector<HTMLElement>("[data-menu-body]");
+const menuOpenBtn = document.querySelector<HTMLButtonElement>("[data-menu-open]");
+const menuCloseBtn = document.querySelector<HTMLButtonElement>("[data-menu-close]");
+const mobileMenuMq = window.matchMedia("(max-width: 900px)");
 const siteTop = document.querySelector<HTMLElement>("[data-site-top]");
 const header = document.querySelector<HTMLElement>("[data-header]");
 const headerSpacer = document.querySelector<HTMLElement>("[data-header-spacer]");
@@ -61,8 +66,12 @@ function updateLayoutVars() {
   }
 }
 
+function isMenuCollapsed() {
+  return mobileMenuMq.matches && !menuSection?.classList.contains("is-menu-open");
+}
+
 function updateMenuNavStuck() {
-  if (!menuNav || !menuNavSentinel) return;
+  if (!menuNav || !menuNavSentinel || isMenuCollapsed()) return;
   const inset = getHeaderHeight();
   menuNav.classList.toggle("is-stuck", menuNavSentinel.getBoundingClientRect().top <= inset);
 }
@@ -105,6 +114,46 @@ function scrollToTarget(el: HTMLElement) {
   }
 }
 
+function openMenu({ scroll = true }: { scroll?: boolean } = {}) {
+  if (!menuSection) return;
+  menuSection.classList.add("is-menu-open");
+  menuOpenBtn?.setAttribute("aria-expanded", "true");
+  menuBody?.querySelectorAll("[data-reveal]").forEach((el) => {
+    el.classList.add("is-visible");
+  });
+  updateLayoutVars();
+  if (scroll) {
+    scrollToTarget(menuSection);
+  }
+}
+
+menuOpenBtn?.addEventListener("click", () => openMenu());
+
+function closeMenu({ scroll = true }: { scroll?: boolean } = {}) {
+  if (!menuSection) return;
+  menuSection.classList.remove("is-menu-open");
+  menuOpenBtn?.setAttribute("aria-expanded", "false");
+  menuNav?.classList.remove("is-stuck");
+  updateLayoutVars();
+  if (scroll) {
+    scrollToTarget(menuSection);
+  }
+}
+
+menuCloseBtn?.addEventListener("click", () => closeMenu());
+
+function maybeOpenMenuFromHash() {
+  const hash = location.hash;
+  if (!hash.startsWith("#menu-")) return;
+  const target = document.querySelector<HTMLElement>(hash);
+  if (!target || !menuBody?.contains(target)) return;
+  openMenu({ scroll: false });
+  scrollToTarget(target);
+}
+
+maybeOpenMenuFromHash();
+window.addEventListener("hashchange", maybeOpenMenuFromHash);
+
 /* In-page anchors respect fixed header + Lenis */
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", (e) => {
@@ -114,6 +163,9 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     const el = document.getElementById(id);
     if (!el) return;
     e.preventDefault();
+    if (menuBody?.contains(el) && isMenuCollapsed()) {
+      openMenu({ scroll: false });
+    }
     scrollToTarget(el);
   });
 });
@@ -132,6 +184,10 @@ function getMenuSpyInset() {
 
 function updateMenuNavActive() {
   if (!menuSections.length || !menuChips.length) return;
+  if (isMenuCollapsed()) {
+    menuChips.forEach((chip) => chip.classList.remove("is-active"));
+    return;
+  }
 
   const menu = document.getElementById("menu");
   if (!menu) return;
@@ -202,3 +258,26 @@ if (lenis) {
   window.addEventListener("scroll", updateParallax, { passive: true });
 }
 updateParallax();
+
+/* iOS/Android: ornaments and marquee can still bleed horizontal scroll */
+if (!canUseLenis) {
+  const horizontalScrollZones = ".h-scroll, .menu-nav__track";
+
+  const lockHorizontalScroll = () => {
+    if (window.scrollX !== 0) {
+      window.scrollTo(0, window.scrollY);
+    }
+  };
+
+  window.addEventListener("scroll", lockHorizontalScroll, { passive: true });
+
+  document.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!(e.target instanceof Element)) return;
+      if (e.target.closest(horizontalScrollZones)) return;
+      lockHorizontalScroll();
+    },
+    { passive: true },
+  );
+}

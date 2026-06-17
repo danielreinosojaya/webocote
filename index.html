@@ -278,15 +278,42 @@
           </p>
         </div>
 
+        <div class="menu-teaser" data-menu-teaser>
+          <p class="menu-teaser__hint">
+            Tacos, brasa, cócteles y vinos naturales — la carta completa cuando quieras verla.
+          </p>
+          <button
+            type="button"
+            class="btn btn--primary"
+            data-menu-open
+            aria-expanded="false"
+            aria-controls="menu-carta"
+          >
+            Ver menú
+          </button>
+          <a class="menu-teaser__skip" href="#galeria">Seguir sin ver la carta</a>
+        </div>
+
+        <div class="menu-body" id="menu-carta" data-menu-body>
         <div class="menu-nav-sentinel" data-menu-nav-sentinel aria-hidden="true"></div>
         <nav class="menu-nav" aria-label="Secciones de la carta" data-menu-nav>
-          <div class="menu-nav__track">
-            <a class="menu-nav__chip is-active" href="#menu-empezar">Pa empezar</a>
-            <a class="menu-nav__chip" href="#menu-tacos">Tacos</a>
-            <a class="menu-nav__chip" href="#menu-dulce">Dulce</a>
-            <a class="menu-nav__chip" href="#menu-cocteles">Cócteles</a>
-            <a class="menu-nav__chip" href="#menu-cerveza">Cerveza</a>
-            <a class="menu-nav__chip" href="#menu-vinos">Vinos</a>
+          <div class="menu-nav__bar">
+            <div class="menu-nav__track">
+              <a class="menu-nav__chip is-active" href="#menu-empezar">Pa empezar</a>
+              <a class="menu-nav__chip" href="#menu-tacos">Tacos</a>
+              <a class="menu-nav__chip" href="#menu-dulce">Dulce</a>
+              <a class="menu-nav__chip" href="#menu-cocteles">Cócteles</a>
+              <a class="menu-nav__chip" href="#menu-cerveza">Cerveza</a>
+              <a class="menu-nav__chip" href="#menu-vinos">Vinos</a>
+            </div>
+            <button
+              type="button"
+              class="menu-nav__close"
+              data-menu-close
+              aria-label="Cerrar menú"
+            >
+              Cerrar menú
+            </button>
           </div>
         </nav>
 
@@ -656,6 +683,7 @@
               Pregunta a tu camarero cuál es nuestra selección de copeo por día.
             </p>
           </article>
+        </div>
         </div>
       </section>
 

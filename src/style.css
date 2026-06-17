@@ -43,8 +43,10 @@
 }
 
 html {
-  overflow-x: clip;
+  overflow-x: hidden;
   width: 100%;
+  max-width: 100%;
+  overscroll-behavior-x: none;
 }
 
 html.lenis,
@@ -54,7 +56,7 @@ html.lenis body {
 
 body {
   margin: 0;
-  overflow-x: clip;
+  overflow-x: hidden;
   width: 100%;
   max-width: 100%;
   touch-action: pan-y;
@@ -69,7 +71,8 @@ body {
 }
 
 #contenido {
-  overflow-x: clip;
+  overflow-x: hidden;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -123,6 +126,7 @@ a:hover {
   z-index: 100;
   width: 100%;
   max-width: 100%;
+  overflow-x: hidden;
   padding-top: env(safe-area-inset-top, 0px);
 }
 
@@ -281,13 +285,15 @@ a:hover {
   display: grid;
   align-items: end;
   padding: clamp(2.5rem, 6vw, 4rem) clamp(1rem, 5vw, 4rem);
-  overflow: clip;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .hero__media {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
 .hero__textures {
@@ -295,6 +301,7 @@ a:hover {
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .hero__pattern {
@@ -487,6 +494,9 @@ a:hover {
   background: var(--bg-elevated);
   padding: 0.85rem 0;
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  contain: paint;
 }
 
 .strip--etched {
@@ -527,12 +537,16 @@ a:hover {
   overflow: hidden;
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  contain: paint;
 }
 
 .marquee__track {
   display: flex;
   gap: 2rem;
   width: max-content;
+  will-change: transform;
   animation: marquee 36s linear infinite;
   font-family: var(--font-display);
   font-weight: 600;
@@ -572,6 +586,8 @@ a:hover {
 /* Sections */
 .section {
   padding: var(--space-section) clamp(1rem, 5vw, 4rem);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .section[id] {
@@ -692,7 +708,7 @@ a:hover {
 .section--menu {
   max-width: 120rem;
   margin: 0 auto;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 .hours-card {
@@ -734,6 +750,90 @@ a:hover {
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
+.menu-teaser {
+  display: none;
+}
+
+.menu-teaser__hint {
+  margin: 0;
+  color: var(--fg-muted);
+  font-size: 0.95rem;
+  max-width: 22rem;
+  text-align: center;
+}
+
+.menu-teaser__skip {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.menu-teaser__skip:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .menu-teaser {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: center;
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    margin-top: 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 1.25rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 50%);
+  }
+
+  .section--menu:not(.is-menu-open) .menu-body {
+    display: none;
+  }
+
+  .section--menu.is-menu-open .menu-teaser {
+    display: none;
+  }
+
+  .menu-nav__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .menu-nav__track {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .menu-nav__close {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--fg-muted);
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.3s var(--ease-out), border-color 0.3s var(--ease-out),
+      background 0.3s var(--ease-out);
+  }
+
+  .menu-nav__close:hover {
+    color: var(--fg);
+    border-color: rgba(243, 238, 230, 0.28);
+  }
+}
+
 .menu-nav {
   position: -webkit-sticky;
   position: sticky;
@@ -755,6 +855,14 @@ a:hover {
   height: 1px;
   margin: 0;
   pointer-events: none;
+}
+
+.menu-nav__bar {
+  display: block;
+}
+
+.menu-nav__close {
+  display: none;
 }
 
 .menu-nav__track {
@@ -1012,13 +1120,16 @@ a:hover {
 .section--gallery {
   max-width: 120rem;
   margin: 0 auto;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 .h-scroll {
   display: flex;
   gap: clamp(0.75rem, 2vw, 1.25rem);
   overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  overscroll-behavior-x: contain;
   padding-bottom: 0.5rem;
   scroll-snap-type: x mandatory;
   scrollbar-color: var(--accent) transparent;
@@ -1112,7 +1223,7 @@ a:hover {
 
 .section--ember {
   position: relative;
-  overflow: clip;
+  overflow: hidden;
 }
 
 .section--ember::after {
@@ -1183,6 +1294,8 @@ a:hover {
   border-top: 1px solid var(--line);
   padding: clamp(2.5rem, 6vw, 4rem) clamp(1rem, 5vw, 4rem);
   background: #040303;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .site-footer__grid {
@@ -1256,11 +1369,13 @@ a:hover {
 @media (max-width: 640px) {
   .hero__mark--toro {
     opacity: 0.09;
+    left: -4%;
+    bottom: -4%;
   }
 
   .hero__mark--fuego {
     width: min(68vw, 380px);
-    right: -18%;
+    right: -6%;
   }
 
   .hero__mark--taco {
@@ -1271,7 +1386,13 @@ a:hover {
 
   .section__watermark {
     width: min(72vmin, 400px);
+    right: 0;
     opacity: 0.04;
+  }
+
+  .section--ember::after {
+    right: 0;
+    bottom: -6%;
   }
 }
 
