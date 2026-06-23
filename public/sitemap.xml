@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ocotemadrid.com/</loc>
+    <loc>https://www.ocote.es/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ocotemadrid.com/aviso-legal.html</loc>
+    <loc>https://www.ocote.es/aviso-legal.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://ocotemadrid.com/privacidad.html</loc>
+    <loc>https://www.ocote.es/privacidad.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://ocotemadrid.com/politica-cookies.html</loc>
+    <loc>https://www.ocote.es/politica-cookies.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
