@@ -5,56 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="Ocote Madrid — cocina de brasa, tacos y mezcal. De México a Madrid."
+      content="Restaurante mexicano en Chueca (Calle Libertad, 5). Tacos a la brasa, mezcal, cócteles y vinos naturales. Horarios, carta y reservas online en TheFork."
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Ocote Madrid" />
     <link rel="canonical" href="https://www.ocote.es/" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content="Ocote Madrid" />
-    <meta property="og:title" content="Ocote Madrid — Cocina de brasa" />
+    <meta property="og:title" content="Ocote Madrid | Restaurante mexicano de brasa en Chueca" />
     <meta
       property="og:description"
-      content="Sitio oficial de Ocote Madrid. Horarios, carta y reservas en TheFork."
+      content="Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Horarios, carta y reservas en TheFork."
     />
     <meta property="og:url" content="https://www.ocote.es/" />
-    <meta property="og:image" content="https://www.ocote.es/web/media/hero-1.jpg" />
+    <meta property="og:image" content="https://www.ocote.es/web/media/og-share.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ocote Madrid — restaurante mexicano de brasa en Chueca" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.ocote.es/" />
-    <meta name="twitter:title" content="Ocote Madrid — Cocina de brasa" />
+    <meta name="twitter:title" content="Ocote Madrid | Restaurante mexicano de brasa en Chueca" />
     <meta
       name="twitter:description"
-      content="Horarios, carta y reservas de Ocote Madrid."
+      content="Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Reservas en TheFork."
     />
-    <meta name="twitter:image" content="https://www.ocote.es/web/media/hero-1.jpg" />
+    <meta name="twitter:image" content="https://www.ocote.es/web/media/og-share.jpg" />
+    <meta name="twitter:image:alt" content="Ocote Madrid — restaurante mexicano de brasa en Chueca" />
     <meta name="theme-color" content="#070605" />
     <link rel="icon" type="image/png" href="/web/media/logo-dark.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" as="image" href="/web/media/hero-1.jpg" />
     <!-- Fuentes display (Syne, Cormorant): se cargan solo con consentimiento de preferencias -->
-    <title>Ocote — Madrid</title>
+    <title>Ocote Madrid | Restaurante mexicano de brasa y tacos en Chueca</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Restaurant",
-        "name": "Ocote Madrid",
+        "@id": "https://www.ocote.es/#restaurant",
+        "name": "Ocote",
+        "alternateName": ["Ocote Madrid", "Ocote - Restaurante Bar Mexicano"],
         "legalName": "OCOTE CAMTECO SL, UNIPERSONAL",
         "taxID": "B21882469",
+        "description": "Restaurante mexicano de brasa y tacos en Chueca, Madrid. Cocina al carbón, barra de mezcal, cócteles y vinos naturales.",
         "url": "https://www.ocote.es/",
-        "image": "https://www.ocote.es/web/media/hero-1.jpg",
-        "servesCuisine": ["Mexicana", "Brasa"],
+        "hasMenu": "https://www.ocote.es/#menu",
+        "image": [
+          "https://www.ocote.es/web/media/og-share.jpg",
+          "https://www.ocote.es/web/media/hero-2.jpg",
+          "https://www.ocote.es/web/media/hero-1.jpg",
+          "https://www.ocote.es/web/media/gallery-1.jpg"
+        ],
+        "servesCuisine": ["Mexicana", "Brasa", "Tacos"],
+        "priceRange": "€€",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Calle Libertad, 5, Planta BJ",
           "postalCode": "28004",
           "addressLocality": "Madrid",
-          "addressRegion": "Madrid",
+          "addressRegion": "Comunidad de Madrid",
           "addressCountry": "ES"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 40.4204568,
+          "longitude": -3.6974553
         },
         "email": "facturacion@ocote.es",
         "telephone": "+34672179164",
-        "sameAs": ["https://www.instagram.com/ocote.madrid"],
-        "acceptsReservations": "True",
+        "sameAs": [
+          "https://www.instagram.com/ocote.madrid",
+          "https://www.google.com/maps/place/Ocote+-+Restaurante+Bar+Mexicano/@40.4204568,-3.6974553,17z/data=!4m6!3m5!1s0xd4229ada5fb5ae1:0xc2e8ae64dbbb0ef0!8m2!3d40.4204568!4d-3.6974553"
+        ],
+        "acceptsReservations": true,
         "openingHoursSpecification": [
           {
             "@type": "OpeningHoursSpecification",
@@ -72,7 +95,7 @@
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": ["Thursday", "Friday", "Saturday"],
             "opens": "13:00",
-            "closes": "23:59"
+            "closes": "02:00"
           },
           {
             "@type": "OpeningHoursSpecification",
@@ -80,7 +103,23 @@
             "opens": "13:00",
             "closes": "24:00"
           }
-        ]
+        ],
+        "potentialAction": {
+          "@type": "ReserveAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9",
+            "inLanguage": "es-ES",
+            "actionPlatform": [
+              "https://schema.org/DesktopWebPlatform",
+              "https://schema.org/MobileWebPlatform"
+            ]
+          },
+          "result": {
+            "@type": "FoodEstablishmentReservation",
+            "name": "Reservar mesa en Ocote Madrid"
+          }
+        }
       }
     </script>
   </head>
@@ -102,7 +141,7 @@
             <a href="#galeria">Galería</a>
             <a href="#mesa">Reservas</a>
           </nav>
-          <a class="btn btn--ghost site-header__cta" href="#mesa">Reservar mesa</a>
+          <a class="btn btn--ghost site-header__cta" href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9" target="_blank" rel="noopener noreferrer">Reservar mesa</a>
         </div>
       </header>
     </div>
@@ -142,7 +181,7 @@
             directo entre el mercado y la mesa.
           </p>
           <div class="hero__actions" data-reveal>
-            <a class="btn btn--primary" href="#mesa">Reservar en TheFork</a>
+            <a class="btn btn--primary" href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9" target="_blank" rel="noopener noreferrer">Reservar en TheFork</a>
             <a class="btn btn--link" href="#experiencia">Ver historia</a>
           </div>
         </div>
@@ -281,7 +320,8 @@
 
         <div class="menu-teaser" data-menu-teaser>
           <p class="menu-teaser__hint">
-            Tacos, brasa, cócteles y vinos naturales — la carta completa cuando quieras verla.
+            Tacos a la brasa, guacamole, coctelería mexicana y vinos naturales en Chueca.
+            Carta completa de restaurante mexicano cuando quieras verla.
           </p>
           <button
             type="button"
@@ -730,12 +770,12 @@
           </h2>
           <p class="cta__text" data-reveal>
             La gestión de reservas está centralizada en TheFork. El botón abre la
-            plataforma en una nueva pestaña (enlace provisional hasta publicar la ficha).
+            plataforma en una nueva pestaña.
           </p>
           <div class="cta__actions" data-reveal>
             <a
               class="btn btn--primary"
-              href="https://www.thefork.es/"
+              href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9"
               target="_blank"
               rel="noopener noreferrer"
               >Reservar en TheFork</a
@@ -749,7 +789,7 @@
             <a href="mailto:facturacion@ocote.es">facturación@ocote.es</a> ·
             <a href="tel:+34672179164">+34 672 17 91 64</a><br />
             <a
-              href="https://www.google.com/maps/search/?api=1&amp;query=Calle+Libertad+5+28004+Madrid"
+              href="https://www.google.com/maps/dir/?api=1&amp;destination=40.4204568,-3.6974553"
               target="_blank"
               rel="noopener noreferrer"
               >Cómo llegar</a

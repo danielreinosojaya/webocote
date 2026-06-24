@@ -2,6 +2,14 @@ import Lenis from "lenis";
 import { initCookieConsent } from "./cookies";
 import "./style.css";
 
+const siteVerification = import.meta.env.VITE_GOOGLE_SITE_VERIFICATION?.trim();
+if (siteVerification && !document.querySelector('meta[name="google-site-verification"]')) {
+  const meta = document.createElement("meta");
+  meta.name = "google-site-verification";
+  meta.content = siteVerification;
+  document.head.append(meta);
+}
+
 initCookieConsent();
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

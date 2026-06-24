@@ -43,6 +43,22 @@ function loadDisplayFonts() {
 
 function enableAnalytics() {
   document.documentElement.dataset.analytics = "enabled";
+
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
+  if (!measurementId || document.getElementById("ocote-ga4")) return;
+
+  const script = document.createElement("script");
+  script.id = "ocote-ga4";
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.append(script);
+
+  window.dataLayer = window.dataLayer ?? [];
+  const gtag = (...args: unknown[]) => {
+    window.dataLayer?.push(args);
+  };
+  gtag("js", new Date());
+  gtag("config", measurementId, { anonymize_ip: true });
 }
 
 function applyConsent(consent: CookieConsent) {
