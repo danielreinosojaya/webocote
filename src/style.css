@@ -172,8 +172,42 @@ a:hover {
 }
 
 .site-header__cta {
-  margin-left: auto;
   flex-shrink: 0;
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+  flex-shrink: 0;
+}
+
+.lang-switch__btn {
+  min-width: 2.1rem;
+  padding: 0.35rem 0.55rem;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--fg-muted);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: color 0.3s var(--ease-out), background 0.3s var(--ease-out);
+}
+
+.lang-switch__btn:hover {
+  color: var(--fg);
+}
+
+.lang-switch__btn.is-active {
+  color: var(--accent);
+  background: var(--accent-dim);
 }
 
 .brand-mark img {
@@ -214,6 +248,10 @@ a:hover {
 @media (max-width: 720px) {
   .site-nav {
     display: none;
+  }
+
+  .lang-switch {
+    margin-left: auto;
   }
 
   .site-header__cta {

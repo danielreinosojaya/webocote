@@ -1,6 +1,9 @@
 import Lenis from "lenis";
 import { initCookieConsent } from "./cookies";
+import { initI18n } from "./i18n";
 import "./style.css";
+
+initI18n();
 
 const siteVerification = import.meta.env.VITE_GOOGLE_SITE_VERIFICATION?.trim();
 if (siteVerification && !document.querySelector('meta[name="google-site-verification"]')) {
@@ -31,7 +34,7 @@ const parallaxWrap = document.querySelector<HTMLElement>("[data-parallax-wrap]")
 const parallaxImg = parallaxWrap?.querySelector<HTMLImageElement>("[data-parallax]");
 const yearEl = document.querySelector<HTMLElement>("[data-year]");
 
-if (yearEl) {
+if (yearEl && !yearEl.textContent) {
   yearEl.textContent = String(new Date().getFullYear());
 }
 
