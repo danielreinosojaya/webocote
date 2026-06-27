@@ -46,14 +46,13 @@ function updateLangSwitcher(locale: Locale) {
 
 export function getLocale(): Locale {
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored === "en" || stored === "es") return stored;
+  if (stored === "en") return "en";
+  if (stored === "es") return "es";
 
-  const params = new URLSearchParams(window.location.search);
-  const queryLang = params.get("lang");
-  if (queryLang === "en" || queryLang === "es") return queryLang;
+  const queryLang = new URLSearchParams(window.location.search).get("lang");
+  if (queryLang === "en") return "en";
 
-  const browser = navigator.language.toLowerCase();
-  return browser.startsWith("en") ? "en" : "es";
+  return "es";
 }
 
 function applyBindings(locale: Locale) {

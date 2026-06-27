@@ -42,9 +42,12 @@
     <script>
       (function () {
         try {
-          var l = localStorage.getItem("ocote_locale");
-          var q = new URLSearchParams(location.search).get("lang");
-          if (l === "en" || q === "en") document.documentElement.lang = "en";
+          if (
+            localStorage.getItem("ocote_locale") === "en" ||
+            new URLSearchParams(location.search).get("lang") === "en"
+          ) {
+            document.documentElement.lang = "en";
+          }
         } catch (e) {}
       })();
     </script>

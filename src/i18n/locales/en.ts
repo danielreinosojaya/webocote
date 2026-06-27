@@ -111,70 +111,70 @@ export const en = {
     starters: {
       title: "To start",
       guacamole: {
-        title: "Guacamole Real",
+        title: "Real guacamole",
         meta: "Served with totopos",
         price: "€10",
       },
       frijoles: {
-        title: "Frijoles maneados gratinados",
+        title: "Gratinéed braised beans",
         meta: "Served with totopos",
         price: "€9",
       },
       papasPuercas: {
-        title: "Papas Puercas",
+        title: "Loaded fries (beef & bacon)",
         meta:
-          "Grilled beef and bacon, melted cheese mix, guacamole, salsa of your choice, pickled onions and cilantro sprouts",
+          "Grilled beef, bacon, melted cheese mix, guacamole, salsa of your choice, pickled onions and cilantro sprouts",
         price: "€12.50",
       },
     },
     tacos: {
       title: "Tacos",
       asadaTocino: {
-        title: "Taco de Asada con tocino",
+        title: "Grilled beef & bacon taco",
         meta: "Served with plenty of avocado",
         price: "€6",
       },
       newYork: {
-        title: "Taco de New York",
+        title: "Beef New York-style taco",
         meta: "Onion, cilantro, fresh cheese and avocado",
         price: "€7",
       },
       porkBelly: {
-        title: "Taco de Pork Belly crujiente",
+        title: "Crispy pork belly taco",
         meta: "Red onion and charred pickled peppers",
         price: "€5",
       },
       ribEye: {
-        title: "Taco de Rib Eye Gran Selección",
-        meta: "60 g of prime beef goodness",
+        title: "Premium beef rib eye taco",
+        meta: "60 g of prime beef",
         price: "€8",
       },
       campechito: {
-        title: "Taco Campechito de Asada",
-        meta: "Navarra txistorra, onion, cilantro and diced torreznos",
+        title: "Beef & pork campechana taco",
+        meta: "Navarra pork chorizo (txistorra), onion, cilantro and diced pork crackling",
         price: "€6",
       },
       pocChuk: {
-        title: "Taco de Poc Chuk de Secreto Ibérico",
+        title: "Iberian pork poc chuc taco",
         meta: "Charred red-onion pickle",
         price: "€5.50",
       },
       hongos: {
-        title: "Taco de Hongos al ajillo",
-        meta: "Pasilla chilli, fresh cheese and cilantro sprouts",
+        title: "Garlic mushroom taco",
+        meta: "Pasilla chilli, fresh cheese and cilantro sprouts · vegetarian",
         price: "€5",
       },
     },
     desserts: {
       title: "Desserts",
       panqueElote: {
-        title: "Panqué de Elote",
+        title: "Sweet corn cake",
         meta:
           "Cacao and vanilla liqueur ice cream, chocolate soil with ancho chilli, tortilla ash",
         price: "€6.50",
       },
       platanosMachos: {
-        title: "Plátanos Machos a la Brasa",
+        title: "Grilled plantains",
         meta: "Sweet cream and fresh cheese",
         price: "€6.50",
       },
@@ -212,8 +212,8 @@ export const en = {
         price: "€11",
       },
       margaritaAlPastor: {
-        title: "Margarita al Pastor",
-        meta: "Agave, pineapple, al pastor marinade, Tequileño Silver, Mezcal Calenda",
+        title: "Al pastor margarita",
+        meta: "Agave, pineapple, al pastor marinade (pork-style), Tequileño Silver, Mezcal Calenda",
         price: "€12",
       },
       molejillo: {
