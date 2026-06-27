@@ -13,6 +13,7 @@ export const bindings: I18nBinding[] = [
   { type: "text", selector: '.site-nav a[href="#galeria"]', key: "nav.galeria" },
   { type: "text", selector: '.site-nav a[href="#mesa"]', key: "nav.reservas" },
   { type: "text", selector: ".site-header__cta", key: "nav.reservarMesa" },
+  { type: "text", selector: ".site-header__menu-btn-label", key: "menu.viewMenu" },
   { type: "attr", selector: ".lang-switch", key: "lang.switchLabel", attr: "aria-label" },
 
   { type: "attr", selector: ".hero", key: "hero.ariaLabel", attr: "aria-label" },
@@ -68,7 +69,7 @@ export const bindings: I18nBinding[] = [
   { type: "text", selector: "#menu .section__title", key: "menu.title" },
   { type: "text", selector: "#menu .section__lede", key: "menu.lede" },
   { type: "text", selector: ".menu-teaser__hint", key: "menu.teaser" },
-  { type: "text", selector: "[data-menu-open]", key: "menu.viewMenu" },
+  { type: "text", selector: ".menu-teaser [data-menu-open]", key: "menu.viewMenu" },
   { type: "text", selector: ".menu-teaser__skip", key: "menu.skipMenu" },
   { type: "text", selector: "[data-menu-close]", key: "menu.closeMenu" },
   { type: "attr", selector: "[data-menu-close]", key: "menu.closeAria", attr: "aria-label" },

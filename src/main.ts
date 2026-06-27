@@ -22,7 +22,7 @@ const useLenis = !prefersReducedMotion && canUseLenis;
 
 const menuSection = document.getElementById("menu");
 const menuBody = document.querySelector<HTMLElement>("[data-menu-body]");
-const menuOpenBtn = document.querySelector<HTMLButtonElement>("[data-menu-open]");
+const menuOpenBtns = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-menu-open]"));
 const menuCloseBtn = document.querySelector<HTMLButtonElement>("[data-menu-close]");
 const mobileMenuMq = window.matchMedia("(max-width: 900px)");
 const siteTop = document.querySelector<HTMLElement>("[data-site-top]");
@@ -125,10 +125,17 @@ function scrollToTarget(el: HTMLElement) {
   }
 }
 
+function setMenuOpenExpanded(expanded: boolean) {
+  for (const btn of menuOpenBtns) {
+    btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+  }
+}
+
 function openMenu({ scroll = true }: { scroll?: boolean } = {}) {
   if (!menuSection) return;
   menuSection.classList.add("is-menu-open");
-  menuOpenBtn?.setAttribute("aria-expanded", "true");
+  document.body.classList.add("is-menu-open");
+  setMenuOpenExpanded(true);
   menuBody?.querySelectorAll("[data-reveal]").forEach((el) => {
     el.classList.add("is-visible");
   });
@@ -138,12 +145,13 @@ function openMenu({ scroll = true }: { scroll?: boolean } = {}) {
   }
 }
 
-menuOpenBtn?.addEventListener("click", () => openMenu());
+menuOpenBtns.forEach((btn) => btn.addEventListener("click", () => openMenu()));
 
 function closeMenu({ scroll = true }: { scroll?: boolean } = {}) {
   if (!menuSection) return;
   menuSection.classList.remove("is-menu-open");
-  menuOpenBtn?.setAttribute("aria-expanded", "false");
+  document.body.classList.remove("is-menu-open");
+  setMenuOpenExpanded(false);
   menuNav?.classList.remove("is-stuck");
   updateLayoutVars();
   if (scroll) {
