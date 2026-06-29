@@ -7,14 +7,19 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:full": "vercel dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "db:migrate": "node scripts/migrate.mjs"
   },
   "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@vercel/node": "^5.2.2",
     "typescript": "~5.7.2",
     "vite": "^6.3.5"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
     "lenis": "^1.2.3"
   }
 }

@@ -22,5 +22,19 @@
       "destination": "https://www.ocote.es/:path*",
       "permanent": true
     }
+  ],
+  "headers": [
+    {
+      "source": "/temperatura",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/temperatura/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    }
   ]
 }
