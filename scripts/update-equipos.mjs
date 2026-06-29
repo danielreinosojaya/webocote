@@ -8,6 +8,8 @@ const SEED = [
   { nombre: "Refrigeradora de barra", tipo: "refrigeracion", temp_max: 4, orden: 4 },
   { nombre: "Refrigeradora de copas barra", tipo: "refrigeracion", temp_max: 4, orden: 5 },
   { nombre: "Refrigerador vegetales", tipo: "vegetales", temp_max: 8, orden: 6 },
+  { nombre: "Congelador 1", tipo: "congelacion", temp_max: -18, orden: 7 },
+  { nombre: "Congelador 2", tipo: "congelacion", temp_max: -18, orden: 8 },
 ];
 
 const url = process.env.DATABASE_URL;
