@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { requireAuth } from "../../lib/auth";
 import { getSql } from "../../lib/db";
+import { findPrimerDiaIncompleto, isMomento, todayMadrid } from "../../lib/dia-operativo";
 import { evaluarTemperatura, type EquipoTipo } from "../../lib/temperatura";
 
 function parseMonth(value: string | undefined): { year: number; month: number } | null {
@@ -64,6 +65,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               r.id,
               r.equipo_id,
               r.fecha::text AS fecha,
+              r.momento,
               to_char(r.hora, 'HH24:MI') AS hora,
               r.temperatura::float AS temperatura,
               r.responsable,
@@ -76,13 +78,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             WHERE r.fecha >= ${period.desde}::date
               AND r.fecha <= ${period.hasta}::date
               AND r.equipo_id = ${equipoId}
-            ORDER BY r.fecha ASC, e.orden ASC, e.nombre ASC
+            ORDER BY r.fecha ASC, e.orden ASC, e.nombre ASC, r.momento ASC
           `
         : await sql`
             SELECT
               r.id,
               r.equipo_id,
               r.fecha::text AS fecha,
+              r.momento,
               to_char(r.hora, 'HH24:MI') AS hora,
               r.temperatura::float AS temperatura,
               r.responsable,
@@ -94,7 +97,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             JOIN equipos e ON e.id = r.equipo_id
             WHERE r.fecha >= ${period.desde}::date
               AND r.fecha <= ${period.hasta}::date
-            ORDER BY r.fecha ASC, e.orden ASC, e.nombre ASC
+            ORDER BY r.fecha ASC, e.orden ASC, e.nombre ASC, r.momento ASC
           `;
 
     const registros = rows.map((row) => ({
@@ -120,6 +123,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const equipoId = Number(req.body?.equipo_id);
     const fecha = typeof req.body?.fecha === "string" ? req.body.fecha : "";
+    const momentoRaw = typeof req.body?.momento === "string" ? req.body.momento : "";
     const hora = typeof req.body?.hora === "string" ? req.body.hora : "";
     const temperatura = Number(req.body?.temperatura);
     const responsable =
@@ -129,6 +133,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!Number.isFinite(equipoId) || !/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
       res.status(400).json({ error: "Equipo o fecha invalidos" });
+      return;
+    }
+
+    if (!isMomento(momentoRaw)) {
+      res.status(400).json({ error: "Momento invalido (inicio o fin)" });
+      return;
+    }
+
+    const hoy = todayMadrid();
+    if (fecha > hoy) {
+      res.status(400).json({ error: "No se pueden registrar fechas futuras" });
+      return;
+    }
+
+    const primerIncompleto = await findPrimerDiaIncompleto(sql, hoy);
+    if (primerIncompleto && fecha > primerIncompleto) {
+      res.status(403).json({
+        error: "Completa las lecturas del dia operativo pendiente antes de registrar fechas posteriores",
+      });
       return;
     }
 
@@ -171,16 +194,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const rows = await sql`
-      INSERT INTO registros (equipo_id, fecha, hora, temperatura, responsable, incidencias)
+      INSERT INTO registros (equipo_id, fecha, momento, hora, temperatura, responsable, incidencias)
       VALUES (
         ${equipoId},
         ${fecha}::date,
+        ${momentoRaw},
         ${hora}::time,
         ${temperatura},
         ${responsable},
         ${incidencias || null}
       )
-      ON CONFLICT (equipo_id, fecha)
+      ON CONFLICT (equipo_id, fecha, momento)
       DO UPDATE SET
         hora = EXCLUDED.hora,
         temperatura = EXCLUDED.temperatura,
@@ -191,6 +215,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         id,
         equipo_id,
         fecha::text AS fecha,
+        momento,
         to_char(hora, 'HH24:MI') AS hora,
         temperatura::float AS temperatura,
         responsable,

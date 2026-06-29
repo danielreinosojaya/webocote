@@ -2,6 +2,7 @@ import "./temperatura.css";
 
 type EquipoTipo = "refrigeracion" | "congelacion" | "vegetales";
 type TempEstado = "ok" | "warning" | "danger";
+type Momento = "inicio" | "fin";
 type Vista = "hoy" | "mes";
 type FiltroModo = "mes" | "rango";
 
@@ -12,7 +13,7 @@ interface Equipo {
   temp_max: number;
 }
 
-interface RegistroHoy {
+interface Lectura {
   id: number;
   hora: string;
   temperatura: number;
@@ -23,7 +24,11 @@ interface RegistroHoy {
 
 interface DashboardItem {
   equipo: Equipo;
-  registro: RegistroHoy | null;
+  inicio: Lectura | null;
+  fin: Lectura | null;
+  pendiente_inicio: boolean;
+  pendiente_fin: boolean;
+  completo: boolean;
   pendiente: boolean;
 }
 
@@ -31,6 +36,7 @@ interface RegistroMes {
   id: number;
   equipo_id: number;
   fecha: string;
+  momento: Momento;
   hora: string;
   temperatura: number;
   responsable: string;
@@ -57,6 +63,12 @@ let equipos: Equipo[] = [];
 let dashboard: DashboardItem[] = [];
 let registrosMes: RegistroMes[] = [];
 let equipoModal: Equipo | null = null;
+let equipoModalMomento: Momento = "inicio";
+let diaBloqueado = false;
+let mensajeBloqueo: string | null = null;
+let diaCompleto = false;
+let puedeSiguienteDia = false;
+let hoyCalendario = isoDate(new Date());
 let pinBuffer = "";
 
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
@@ -133,6 +145,16 @@ function formatFechaTabla(iso: string): string {
     month: "2-digit",
     year: "numeric",
   }).format(new Date(y, m - 1, d));
+}
+
+function momentoLabel(momento: Momento): string {
+  return momento === "inicio" ? "Apertura" : "Cierre";
+}
+
+function shiftDay(iso: string, delta: number): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  const dt = new Date(y, m - 1, d + delta);
+  return isoDate(dt);
 }
 
 function tipoLabel(tipo: EquipoTipo): string {
@@ -245,10 +267,21 @@ async function loadApp(): Promise<void> {
 
 async function refreshData(): Promise<void> {
   if (vista === "hoy") {
-    const data = await api<{ fecha: string; items: DashboardItem[] }>(
-      `/api/temperatura/dashboard?fecha=${fechaHoy}`,
-    );
+    const data = await api<{
+      fecha: string;
+      hoy: string;
+      bloqueado: boolean;
+      mensaje_bloqueo: string | null;
+      dia_completo: boolean;
+      puede_siguiente_dia: boolean;
+      items: DashboardItem[];
+    }>(`/api/temperatura/dashboard?fecha=${fechaHoy}`);
     fechaHoy = data.fecha;
+    hoyCalendario = data.hoy;
+    diaBloqueado = data.bloqueado;
+    mensajeBloqueo = data.mensaje_bloqueo;
+    diaCompleto = data.dia_completo;
+    puedeSiguienteDia = data.puede_siguiente_dia;
     dashboard = data.items;
   } else {
     const data = await api<{ desde: string; hasta: string; registros: RegistroMes[] }>(
@@ -286,6 +319,8 @@ function renderShell(): void {
       <button type="button" class="temp-tabs__btn${vista === "mes" ? " is-active" : ""}" data-vista="mes">Informes</button>
     </nav>
 
+    ${vista === "hoy" ? renderDiaNav() : ""}
+
     <main class="temp-main">
       ${vista === "hoy" ? renderHoy() : renderMes()}
     </main>
@@ -313,46 +348,84 @@ async function switchVista(): Promise<void> {
   renderShell();
 }
 
+function renderDiaNav(): string {
+  const estado = diaCompleto
+    ? '<span class="dia-nav__ok">Dia completo</span>'
+    : '<span class="dia-nav__pendiente">Lecturas pendientes</span>';
+
+  return `
+    <nav class="dia-nav" aria-label="Navegacion por dia">
+      <button type="button" class="btn btn--ghost btn--sm" data-dia="prev" aria-label="Dia anterior">&larr;</button>
+      ${estado}
+      <button type="button" class="btn btn--ghost btn--sm" data-dia="next"
+        ${puedeSiguienteDia ? "" : "disabled"}
+        aria-label="Dia siguiente">&rarr;</button>
+    </nav>
+  `;
+}
+
+function renderLecturaSlot(
+  equipoId: number,
+  momento: Momento,
+  lectura: Lectura | null,
+): string {
+  const label = momentoLabel(momento);
+  if (lectura) {
+    return `
+      <div class="lectura-slot lectura-slot--${lectura.estado}">
+        <div class="lectura-slot__head">
+          <span class="lectura-slot__label">${label}</span>
+          <span class="lectura-slot__temp">${lectura.temperatura}\u00B0C</span>
+        </div>
+        <p class="lectura-slot__meta">${lectura.hora} &middot; ${escapeHtml(lectura.responsable)}</p>
+        ${lectura.incidencias ? `<p class="lectura-slot__inc">${escapeHtml(lectura.incidencias)}</p>` : ""}
+        <button type="button" class="btn btn--ghost btn--sm btn--block" data-registrar="${equipoId}" data-momento="${momento}">
+          Actualizar ${label.toLowerCase()}
+        </button>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="lectura-slot lectura-slot--empty">
+      <span class="lectura-slot__label">${label}</span>
+      <p class="lectura-slot__pending">Sin registro</p>
+      <button type="button" class="btn btn--primary btn--sm btn--block" data-registrar="${equipoId}" data-momento="${momento}">
+        Registrar ${label.toLowerCase()}
+      </button>
+    </div>
+  `;
+}
+
 function renderHoy(): string {
-  const pendientes = dashboard.filter((i) => i.pendiente).length;
+  const pendientes = dashboard.filter((i) => !i.completo).length;
+  const bloqueo = diaBloqueado && mensajeBloqueo
+    ? `<p class="temp-alert temp-alert--bloqueo" role="alert">${escapeHtml(mensajeBloqueo)}</p>`
+    : "";
 
   const cards = dashboard
     .map((item) => {
-      const { equipo, registro, pendiente } = item;
-      const estado = registro?.estado ?? "danger";
-
-      let body = "";
-      if (registro) {
-        body = `
-          <p class="equipo-card__reading equipo-card__reading--${estado}">
-            <span class="equipo-card__temp">${registro.temperatura}\u00B0C</span>
-            <span class="equipo-card__meta">${registro.hora} &middot; ${escapeHtml(registro.responsable)}</span>
-          </p>
-          ${registro.incidencias ? `<p class="equipo-card__incidencia">${escapeHtml(registro.incidencias)}</p>` : ""}
-        `;
-      } else {
-        body = `<p class="equipo-card__empty">Sin registro hoy</p>`;
-      }
-
+      const { equipo, completo } = item;
       return `
-        <article class="equipo-card${pendiente ? " equipo-card--pendiente" : ""}" data-equipo-id="${equipo.id}">
+        <article class="equipo-card${completo ? "" : " equipo-card--pendiente"}" data-equipo-id="${equipo.id}">
           <div class="equipo-card__head">
             <h2 class="equipo-card__name">${escapeHtml(equipo.nombre)}</h2>
             <span class="equipo-card__tipo">${tipoLabel(equipo.tipo)}</span>
           </div>
-          ${body}
-          <button type="button" class="btn btn--primary btn--block" data-registrar="${equipo.id}">
-            ${registro ? "Actualizar medicion" : "Registrar medicion"}
-          </button>
+          <div class="equipo-card__lecturas">
+            ${renderLecturaSlot(equipo.id, "inicio", item.inicio)}
+            ${renderLecturaSlot(equipo.id, "fin", item.fin)}
+          </div>
         </article>
       `;
     })
     .join("");
 
   return `
-    ${pendientes > 0 ? `<p class="temp-alert">${pendientes} equipo${pendientes > 1 ? "s" : ""} sin registro hoy</p>` : ""}
+    ${bloqueo}
+    ${pendientes > 0 ? `<p class="temp-alert">${pendientes} equipo${pendientes > 1 ? "s" : ""} con lecturas incompletas (apertura y cierre)</p>` : ""}
     <div class="equipo-grid">${cards}</div>
-    <p class="temp-legal">Registros conservados para inspeccion sanitaria - Normativa Comunidad de Madrid</p>
+    <p class="temp-legal">Dos lecturas diarias por equipo: apertura y cierre. Normativa Comunidad de Madrid.</p>
   `;
 }
 
@@ -425,6 +498,7 @@ function renderMesTable(): string {
         <tr class="mes-row mes-row--${r.estado}">
           <td data-label="Equipo">${escapeHtml(r.equipo_nombre)}</td>
           <td data-label="Fecha">${formatFechaTabla(r.fecha)}</td>
+          <td data-label="Lectura">${momentoLabel(r.momento)}</td>
           <td data-label="Dia">${day}</td>
           <td data-label="Temp.">${r.temperatura}\u00B0C</td>
           <td data-label="Hora">${r.hora}</td>
@@ -442,6 +516,7 @@ function renderMesTable(): string {
           <tr>
             <th>Equipo / Camara</th>
             <th>Fecha</th>
+            <th>Lectura</th>
             <th>Dia</th>
             <th>Temp. (&deg;C)</th>
             <th>Hora</th>
@@ -460,11 +535,25 @@ function renderMes(): string {
 }
 
 function bindHoyEvents(): void {
+  app.querySelector('[data-dia="prev"]')?.addEventListener("click", () => {
+    fechaHoy = shiftDay(fechaHoy, -1);
+    void switchVista();
+  });
+
+  app.querySelector<HTMLButtonElement>('[data-dia="next"]')?.addEventListener("click", (btn) => {
+    if (btn.currentTarget.disabled) return;
+    fechaHoy = shiftDay(fechaHoy, 1);
+    void switchVista();
+  });
+
   app.querySelectorAll<HTMLButtonElement>("[data-registrar]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.registrar);
+      const momento = btn.dataset.momento as Momento;
       const item = dashboard.find((d) => d.equipo.id === id);
-      if (item) openModal(item.equipo, item.registro);
+      if (!item) return;
+      const lectura = momento === "inicio" ? item.inicio : item.fin;
+      openModal(item.equipo, momento, lectura);
     });
   });
 }
@@ -553,6 +642,7 @@ function updateInformePrint(): void {
         <tr>
           <td>${escapeHtml(r.equipo_nombre)}</td>
           <td>${formatFechaTabla(r.fecha)}</td>
+          <td>${momentoLabel(r.momento)}</td>
           <td>${r.temperatura}\u00B0C</td>
           <td>${r.hora}</td>
           <td>${escapeHtml(r.responsable)}</td>
@@ -561,7 +651,7 @@ function updateInformePrint(): void {
       `,
         )
         .join("")
-    : `<tr><td colspan="6" class="informe-print__empty">Sin registros en el periodo seleccionado</td></tr>`;
+    : `<tr><td colspan="7" class="informe-print__empty">Sin registros en el periodo seleccionado</td></tr>`;
 
   const generado = new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
@@ -588,6 +678,7 @@ function updateInformePrint(): void {
           <tr>
             <th>Equipo / Camara</th>
             <th>Fecha</th>
+            <th>Lectura</th>
             <th>Temp. (&deg;C)</th>
             <th>Hora</th>
             <th>Responsable</th>
@@ -606,8 +697,9 @@ function updateInformePrint(): void {
   `;
 }
 
-function openModal(equipo: Equipo, registro: RegistroHoy | null): void {
+function openModal(equipo: Equipo, momento: Momento, registro: Lectura | null): void {
   equipoModal = equipo;
+  equipoModalMomento = momento;
   const root = document.getElementById("modal-root")!;
   const lastResp = localStorage.getItem(STORAGE_RESP) ?? registro?.responsable ?? "";
 
@@ -615,10 +707,14 @@ function openModal(equipo: Equipo, registro: RegistroHoy | null): void {
     <div class="modal-backdrop" data-close="1">
       <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
         <header class="modal__head">
-          <h2 id="modal-title">${escapeHtml(equipo.nombre)}</h2>
+          <div>
+            <p class="modal__momento">${momentoLabel(momento)}</p>
+            <h2 id="modal-title">${escapeHtml(equipo.nombre)}</h2>
+          </div>
           <button type="button" class="modal__close" data-close="1" aria-label="Cerrar">&times;</button>
         </header>
         <form class="modal__form" id="registro-form">
+          <input type="hidden" name="momento" value="${momento}" />
           <label class="field">
             <span>Temperatura (&deg;C)</span>
             <input name="temperatura" type="number" step="0.1" inputmode="decimal" required
@@ -660,6 +756,7 @@ function openModal(equipo: Equipo, registro: RegistroHoy | null): void {
 function closeModal(): void {
   document.getElementById("modal-root")!.innerHTML = "";
   equipoModal = null;
+  equipoModalMomento = "inicio";
 }
 
 async function submitRegistro(form: FormData): Promise<void> {
@@ -672,6 +769,7 @@ async function submitRegistro(form: FormData): Promise<void> {
   const hora = String(form.get("hora") ?? "").slice(0, 5);
   const responsable = String(form.get("responsable") ?? "").trim().toUpperCase();
   const incidencias = String(form.get("incidencias") ?? "").trim();
+  const momento = String(form.get("momento") ?? equipoModalMomento) as Momento;
 
   try {
     await api("/api/temperatura/registros", {
@@ -679,6 +777,7 @@ async function submitRegistro(form: FormData): Promise<void> {
       body: JSON.stringify({
         equipo_id: equipoModal.id,
         fecha: fechaHoy,
+        momento,
         hora,
         temperatura,
         responsable,

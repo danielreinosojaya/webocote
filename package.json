@@ -10,7 +10,9 @@
     "dev:full": "vercel dev",
     "build": "vite build",
     "preview": "vite preview",
-    "db:migrate": "node scripts/migrate.mjs"
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:migrate:doble": "node scripts/migrate-doble-lectura.mjs",
+    "db:equipos": "node scripts/update-equipos.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",
