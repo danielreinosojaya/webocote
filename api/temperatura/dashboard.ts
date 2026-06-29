@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { requireAuth } from "../../lib/auth";
 import { getSql } from "../../lib/db";
+import { ensureSchema } from "../../lib/ensure-schema";
 import { findPrimerDiaIncompleto, todayMadrid, type Momento } from "../../lib/dia-operativo";
 import { evaluarTemperatura, type EquipoTipo } from "../../lib/temperatura";
 
@@ -35,7 +36,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (!requireAuth(req, res)) return;
 
-  const sql = getSql();
+  try {
+    await ensureSchema();
+    const sql = getSql();
   const hoy = todayMadrid();
   const solicitada =
     typeof req.query.fecha === "string" && /^\d{4}-\d{2}-\d{2}$/.test(req.query.fecha)
@@ -133,4 +136,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     primer_dia_incompleto: primerIncompleto,
     items,
   });
+  } catch (err) {
+    console.error("dashboard error:", err);
+    res.status(500).json({ error: "Error al cargar el panel" });
+  }
 }

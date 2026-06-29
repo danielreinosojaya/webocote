@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { requireAuth } from "../../lib/auth";
 import { getSql } from "../../lib/db";
 import { findPrimerDiaIncompleto, isMomento, todayMadrid } from "../../lib/dia-operativo";
+import { ensureSchema } from "../../lib/ensure-schema";
 import { evaluarTemperatura, type EquipoTipo } from "../../lib/temperatura";
 
 function parseMonth(value: string | undefined): { year: number; month: number } | null {
@@ -42,6 +43,14 @@ function resolvePeriod(query: VercelRequest["query"]): { desde: string; hasta: s
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  try {
+    await ensureSchema();
+  } catch (err) {
+    console.error("schema error:", err);
+    res.status(500).json({ error: "Error de base de datos" });
+    return;
+  }
+
   const sql = getSql();
 
   if (req.method === "GET") {
