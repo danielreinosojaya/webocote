@@ -13,7 +13,11 @@ function getSessionSecret(): string {
 }
 
 function sign(payload: string): string {
-  return crypto.createHmac("sha256", getSessionSecret()).update(payload).digest("hex");
+  const secret = process.env.SESSION_SECRET ?? process.env.TEMPERATURA_PIN;
+  if (!secret) {
+    throw new Error("SESSION_SECRET o TEMPERATURA_PIN requerido");
+  }
+  return crypto.createHmac("sha256", secret).update(payload).digest("hex");
 }
 
 export function createSessionToken(): string {
@@ -24,11 +28,13 @@ export function createSessionToken(): string {
 
 export function verifySessionToken(token: string | undefined): boolean {
   if (!token) return false;
+  const secret = process.env.SESSION_SECRET ?? process.env.TEMPERATURA_PIN;
+  if (!secret) return false;
   const [expStr, sig] = token.split(".");
   if (!expStr || !sig) return false;
   const expires = Number(expStr);
   if (!Number.isFinite(expires) || expires < Date.now()) return false;
-  const expected = sign(expStr);
+  const expected = crypto.createHmac("sha256", secret).update(expStr).digest("hex");
   try {
     return crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
   } catch {
