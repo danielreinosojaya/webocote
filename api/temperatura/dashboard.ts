@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { requireAuth } from "../../lib/auth";
-import { getSql } from "../../lib/db";
-import { ensureSchema } from "../../lib/ensure-schema";
-import { findPrimerDiaIncompleto, todayMadrid, type Momento } from "../../lib/dia-operativo";
-import { evaluarTemperatura, type EquipoTipo } from "../../lib/temperatura";
+import { requireAuth } from "../../lib/auth.js";
+import { getSql } from "../../lib/db.js";
+import { ensureSchema } from "../../lib/ensure-schema.js";
+import { findPrimerDiaIncompleto, todayMadrid, type Momento } from "../../lib/dia-operativo.js";
+import { evaluarTemperatura, type EquipoTipo } from "../../lib/temperatura.js";
 
 interface RegistroRow {
   id: number;

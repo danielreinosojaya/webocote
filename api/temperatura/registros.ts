@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { requireAuth } from "../../lib/auth";
-import { getSql } from "../../lib/db";
-import { findPrimerDiaIncompleto, isMomento, todayMadrid } from "../../lib/dia-operativo";
-import { ensureSchema } from "../../lib/ensure-schema";
-import { evaluarTemperatura, type EquipoTipo } from "../../lib/temperatura";
+import { requireAuth } from "../../lib/auth.js";
+import { getSql } from "../../lib/db.js";
+import { findPrimerDiaIncompleto, isMomento, todayMadrid } from "../../lib/dia-operativo.js";
+import { ensureSchema } from "../../lib/ensure-schema.js";
+import { evaluarTemperatura, type EquipoTipo } from "../../lib/temperatura.js";
 
 function parseMonth(value: string | undefined): { year: number; month: number } | null {
   if (!value || !/^\d{4}-\d{2}$/.test(value)) return null;

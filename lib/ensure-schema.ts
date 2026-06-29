@@ -1,5 +1,5 @@
 import { neon } from "@neondatabase/serverless";
-import { getSql } from "./db";
+import { getSql } from "./db.js";
 
 type Sql = ReturnType<typeof neon>;
 
