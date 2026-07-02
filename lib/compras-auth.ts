@@ -1,0 +1,95 @@
+import crypto from "node:crypto";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+
+const COOKIE_NAME = "ocote_compras_auth";
+const SESSION_HOURS = 12;
+
+function sign(payload: string): string {
+  const secret = process.env.SESSION_SECRET ?? process.env.COMPRAS_PIN;
+  if (!secret) {
+    throw new Error("SESSION_SECRET o COMPRAS_PIN requerido");
+  }
+  return crypto.createHmac("sha256", secret).update(payload).digest("hex");
+}
+
+export function createComprasSessionToken(): string {
+  const expires = Date.now() + SESSION_HOURS * 60 * 60 * 1000;
+  const payload = String(expires);
+  return `${payload}.${sign(payload)}`;
+}
+
+export function verifyComprasSessionToken(token: string | undefined): boolean {
+  if (!token) return false;
+  const secret = process.env.SESSION_SECRET ?? process.env.COMPRAS_PIN;
+  if (!secret) return false;
+  const [expStr, sig] = token.split(".");
+  if (!expStr || !sig) return false;
+  const expires = Number(expStr);
+  if (!Number.isFinite(expires) || expires < Date.now()) return false;
+  const expected = crypto.createHmac("sha256", secret).update(expStr).digest("hex");
+  try {
+    return crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
+export function getComprasPinFromEnv(): string {
+  const pin = process.env.COMPRAS_PIN ?? process.env.TEMPERATURA_PIN;
+  if (!pin || !/^\d{4,6}$/.test(pin)) {
+    throw new Error("COMPRAS_PIN debe ser un codigo numerico de 4 a 6 digitos");
+  }
+  return pin;
+}
+
+export function verifyComprasPin(input: string): boolean {
+  try {
+    const expected = getComprasPinFromEnv();
+    if (!/^\d{4,6}$/.test(input)) return false;
+    if (input.length !== expected.length) return false;
+    return crypto.timingSafeEqual(Buffer.from(input), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
+function isProduction(): boolean {
+  return process.env.VERCEL_ENV === "production";
+}
+
+export function setComprasSessionCookie(res: VercelResponse, token: string): void {
+  const maxAge = SESSION_HOURS * 60 * 60;
+  const secure = isProduction() ? "; Secure" : "";
+  res.setHeader(
+    "Set-Cookie",
+    `${COOKIE_NAME}=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${secure}`,
+  );
+}
+
+export function clearComprasSessionCookie(res: VercelResponse): void {
+  const secure = isProduction() ? "; Secure" : "";
+  res.setHeader(
+    "Set-Cookie",
+    `${COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${secure}`,
+  );
+}
+
+export function readComprasSessionToken(req: VercelRequest): string | undefined {
+  const raw = req.headers.cookie;
+  if (!raw) return undefined;
+  for (const part of raw.split(";")) {
+    const [name, ...rest] = part.trim().split("=");
+    if (name === COOKIE_NAME) {
+      return rest.join("=");
+    }
+  }
+  return undefined;
+}
+
+export function requireComprasAuth(req: VercelRequest, res: VercelResponse): boolean {
+  if (verifyComprasSessionToken(readComprasSessionToken(req))) {
+    return true;
+  }
+  res.status(401).json({ error: "No autorizado" });
+  return false;
+}

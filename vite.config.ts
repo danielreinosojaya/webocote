@@ -12,6 +12,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         temperatura: resolve(__dirname, "temperatura/index.html"),
+        compras: resolve(__dirname, "compras/index.html"),
       },
     },
   },

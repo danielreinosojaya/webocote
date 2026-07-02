@@ -378,7 +378,7 @@ export const es = {
     },
     analytics: {
       title: "Analítica",
-      desc: "Mediciones anónimas de uso para mejorar el sitio (solo si se activa en el futuro).",
+      desc: "Mediciones de uso (Google Analytics y Meta Pixel) para mejorar el sitio y medir campañas.",
       toggle: "Activar",
     },
     close: "Cerrar",

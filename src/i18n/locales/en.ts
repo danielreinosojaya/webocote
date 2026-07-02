@@ -378,7 +378,7 @@ export const en = {
     },
     analytics: {
       title: "Analytics",
-      desc: "Anonymous usage metrics to improve the site (only if enabled in the future).",
+      desc: "Usage metrics (Google Analytics and Meta Pixel) to improve the site and measure campaigns.",
       toggle: "Enable",
     },
     close: "Close",
