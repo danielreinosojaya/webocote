@@ -14,7 +14,7 @@ export interface AlbaranExtraido {
   numero: string | null;
   lineas: LineaExtraida[];
   confianza: "alta" | "media" | "baja";
-  metodo: "texto" | "vision";
+  metodo: "texto" | "ocr";
   notas: string | null;
 }
 

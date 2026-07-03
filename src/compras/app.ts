@@ -6,6 +6,8 @@ import {
   processPdfFile,
   type PdfProcessResult,
 } from "./pdf-client";
+import { parseAlbaranText } from "./parse-albaran";
+import { ocrImages } from "./ocr-client";
 
 type Vista = "subir" | "albaranes" | "resumen";
 
@@ -53,7 +55,7 @@ interface AlbaranExtraido {
   numero: string | null;
   lineas: LineaExtraida[];
   confianza: "alta" | "media" | "baja";
-  metodo: "texto" | "vision";
+  metodo: "texto" | "ocr";
   notas: string | null;
 }
 
@@ -94,6 +96,7 @@ let periodoHasta = monthBounds(loadPeriodo()).hasta;
 let extraccion: AlbaranExtraido | null = null;
 let pdfInfo: PdfProcessResult | null = null;
 let subiendo = false;
+let subiendoMensaje = "";
 let archivoNombre = "";
 let albaranDetalle: { albaran: AlbaranDetalle; lineas: LineaGuardada[] } | null = null;
 let editingSavedLineaId: number | null = null;
@@ -186,7 +189,8 @@ function confianzaLabel(c: string): string {
 }
 
 function metodoLabel(m: string): string {
-  return m === "vision" ? "Escaneado (vision)" : "Texto PDF";
+  if (m === "ocr") return "Escaneado (OCR)";
+  return "Texto PDF";
 }
 
 function renderInsumoSelect(name: string, insumoId: number | null): string {
@@ -593,8 +597,8 @@ function renderSubir(): string {
           ${subiendo ? "Procesando..." : "Seleccionar archivo"}
         </button>
       </div>
-      ${subiendo ? `<p class="compras-status">Leyendo documento y extrayendo lineas con IA...</p>` : ""}
-      <p class="compras-legal">Revisa siempre los datos extraidos antes de guardar. Los PDFs escaneados pueden requerir correccion manual.</p>
+      ${subiendo ? `<p class="compras-status">${escapeHtml(subiendoMensaje || "Procesando documento...")}</p>` : ""}
+      <p class="compras-legal">Revisa siempre los datos antes de guardar. La lectura automatica puede fallar: corrige o elimina lineas manualmente.</p>
     </section>
   `;
 }
@@ -767,36 +771,58 @@ async function handleFile(file: File): Promise<void> {
   }
 
   subiendo = true;
+  subiendoMensaje = "Leyendo documento...";
   archivoNombre = file.name;
   renderShell();
 
   try {
     pdfInfo = isPdfFile(file) ? await processPdfFile(file) : await processImageFile(file);
 
-    const data = await api<{ extraccion: AlbaranExtraido }>("/api/compras/extract", {
-      method: "POST",
-      body: JSON.stringify({
-        text: pdfInfo.text,
-        pages: pdfInfo.pages,
-        forzar_vision: pdfInfo.esEscaneado,
-      }),
-    });
+    let text = pdfInfo.text;
+    let metodo: "texto" | "ocr" = "texto";
+
+    if (pdfInfo.esEscaneado && pdfInfo.pages.length > 0) {
+      subiendoMensaje = "Reconociendo texto (OCR)...";
+      renderShell();
+      text = await ocrImages(pdfInfo.pages, (p) => {
+        subiendoMensaje = `Reconociendo texto (OCR)... ${Math.round(p * 100)}%`;
+        renderShell();
+      });
+      metodo = "ocr";
+      pdfInfo = { ...pdfInfo, text };
+    }
+
+    const parsed = parseAlbaranText(text, metodo);
 
     extraccion = {
-      ...data.extraccion,
-      lineas: data.extraccion.lineas.map((l) => ({
+      ...parsed,
+      lineas: parsed.lineas.map((l) => ({
         ...l,
         insumo_id: null,
         insumo_nombre: "",
-        _editing: false,
+        _editing: parsed.lineas.length === 0,
       })),
     };
+
+    if (parsed.lineas.length === 0) {
+      extraccion.lineas.push({
+        descripcion: "",
+        cantidad: 1,
+        unidad: "ud",
+        precio_unitario: null,
+        total: null,
+        insumo_id: null,
+        insumo_nombre: "",
+        _editing: true,
+      });
+    }
   } catch (err) {
     alert(err instanceof Error ? err.message : "Error al procesar el archivo");
     extraccion = null;
     pdfInfo = null;
   } finally {
     subiendo = false;
+    subiendoMensaje = "";
     renderShell();
   }
 }
