@@ -4,12 +4,17 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 const COOKIE_NAME = "ocote_compras_auth";
 const SESSION_HOURS = 12;
 
-function sign(payload: string): string {
-  const secret = process.env.SESSION_SECRET ?? process.env.COMPRAS_PIN;
+function getSessionSecret(): string {
+  const secret =
+    process.env.SESSION_SECRET ?? process.env.COMPRAS_PIN ?? process.env.TEMPERATURA_PIN;
   if (!secret) {
-    throw new Error("SESSION_SECRET o COMPRAS_PIN requerido");
+    throw new Error("SESSION_SECRET, COMPRAS_PIN o TEMPERATURA_PIN requerido");
   }
-  return crypto.createHmac("sha256", secret).update(payload).digest("hex");
+  return secret;
+}
+
+function sign(payload: string): string {
+  return crypto.createHmac("sha256", getSessionSecret()).update(payload).digest("hex");
 }
 
 export function createComprasSessionToken(): string {
@@ -20,14 +25,13 @@ export function createComprasSessionToken(): string {
 
 export function verifyComprasSessionToken(token: string | undefined): boolean {
   if (!token) return false;
-  const secret = process.env.SESSION_SECRET ?? process.env.COMPRAS_PIN;
-  if (!secret) return false;
-  const [expStr, sig] = token.split(".");
-  if (!expStr || !sig) return false;
-  const expires = Number(expStr);
-  if (!Number.isFinite(expires) || expires < Date.now()) return false;
-  const expected = crypto.createHmac("sha256", secret).update(expStr).digest("hex");
   try {
+    const secret = getSessionSecret();
+    const [expStr, sig] = token.split(".");
+    if (!expStr || !sig) return false;
+    const expires = Number(expStr);
+    if (!Number.isFinite(expires) || expires < Date.now()) return false;
+    const expected = crypto.createHmac("sha256", secret).update(expStr).digest("hex");
     return crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
   } catch {
     return false;

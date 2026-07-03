@@ -8,14 +8,19 @@ import {
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "POST") {
-    const pin = typeof req.body?.pin === "string" ? req.body.pin.trim() : "";
-    if (!verifyComprasPin(pin)) {
-      res.status(401).json({ error: "Codigo incorrecto" });
-      return;
+    try {
+      const pin = typeof req.body?.pin === "string" ? req.body.pin.trim() : "";
+      if (!verifyComprasPin(pin)) {
+        res.status(401).json({ error: "Codigo incorrecto" });
+        return;
+      }
+      const token = createComprasSessionToken();
+      setComprasSessionCookie(res, token);
+      res.status(200).json({ ok: true });
+    } catch (err) {
+      console.error("compras login error:", err);
+      res.status(500).json({ error: "Error de configuracion del servidor" });
     }
-    const token = createComprasSessionToken();
-    setComprasSessionCookie(res, token);
-    res.status(200).json({ ok: true });
     return;
   }
 
