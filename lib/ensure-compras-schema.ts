@@ -53,7 +53,6 @@ const STATEMENTS = [
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
   )`,
   `CREATE INDEX IF NOT EXISTS idx_albaranes_fecha ON albaranes (fecha)`,
-  `CREATE INDEX IF NOT EXISTS idx_albaranes_periodo ON albaranes (periodo)`,
   `CREATE INDEX IF NOT EXISTS idx_lineas_albaran ON lineas_compra (albaran_id)`,
   `CREATE INDEX IF NOT EXISTS idx_lineas_insumo ON lineas_compra (insumo_id)`,
 ];
@@ -67,6 +66,7 @@ async function run(sql: Sql): Promise<void> {
   await sql.query(
     `UPDATE albaranes SET periodo = to_char(fecha, 'YYYY-MM') WHERE periodo IS NULL`,
   );
+  await sql.query(`CREATE INDEX IF NOT EXISTS idx_albaranes_periodo ON albaranes (periodo)`);
 }
 
 export function ensureComprasSchema(): Promise<void> {
