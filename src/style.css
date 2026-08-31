@@ -1348,7 +1348,85 @@ a:hover {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem 1rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.cta__channels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  max-width: 28rem;
+  margin: 0 auto 2.5rem;
+}
+
+.cta__channel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 1.15rem 0.9rem 1.2rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.03), transparent 55%);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out),
+    background 0.35s var(--ease-out),
+    color 0.35s var(--ease-out);
+}
+
+.cta__channel:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--fg);
+  background: linear-gradient(160deg, rgba(143, 209, 122, 0.1), transparent 60%);
+}
+
+.cta__channel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.cta__channel-icon {
+  margin-bottom: 0.2rem;
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+.cta__channel-kicker {
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--accent);
+}
+
+.cta__channel-number {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2.4vw, 1.08rem);
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.cta__channel-action {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.cta__channel:hover .cta__channel-action {
+  color: var(--accent);
+}
+
+@media (max-width: 520px) {
+  .cta__channels {
+    grid-template-columns: 1fr;
+    max-width: 16.5rem;
+  }
 }
 
 .cta__address {

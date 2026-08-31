@@ -191,7 +191,12 @@ export const bindings: I18nBinding[] = [
   { type: "html", selector: "#mesa .cta__title", key: "cta.titleHtml" },
   { type: "text", selector: "#mesa .cta__text", key: "cta.text" },
   { type: "text", selector: "#mesa .cta__actions .btn--primary", key: "cta.book" },
-  { type: "text", selector: "#mesa .cta__actions .btn--ghost", key: "cta.call" },
+  { type: "text", selector: ".cta__channel--call .cta__channel-kicker", key: "cta.landlineKicker" },
+  { type: "text", selector: ".cta__channel--call .cta__channel-action", key: "cta.call" },
+  { type: "attr", selector: ".cta__channel--call", key: "cta.callAria", attr: "aria-label" },
+  { type: "text", selector: ".cta__channel--whatsapp .cta__channel-kicker", key: "cta.whatsappKicker" },
+  { type: "text", selector: ".cta__channel--whatsapp .cta__channel-action", key: "cta.whatsappAction" },
+  { type: "attr", selector: ".cta__channel--whatsapp", key: "cta.whatsappAria", attr: "aria-label" },
   { type: "text", selector: ".cta__address a[href*='google.com/maps']", key: "cta.directions" },
   { type: "text", selector: ".cta__address > span", key: "cta.reservationsNote" },
 
