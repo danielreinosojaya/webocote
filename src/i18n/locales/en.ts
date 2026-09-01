@@ -2,12 +2,12 @@ export const en = {
   meta: {
     title: "Ocote Madrid | Charcoal-grilled Mexican restaurant & tacos in Chueca",
     description:
-      "Mexican restaurant in Chueca (Calle Libertad, 5). Charcoal-grilled tacos, mezcal, cocktails and natural wines. Hours, menu and online reservations on TheFork.",
+      "Mexican restaurant in Chueca (Calle Libertad, 5). Charcoal-grilled tacos, mezcal, cocktails and natural wines. Hours, menu and online reservations on Cover Manager and TheFork.",
     ogTitle: "Ocote Madrid | Charcoal-grilled Mexican restaurant in Chueca",
     ogDescription:
-      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Hours, menu and reservations on TheFork.",
+      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Hours, menu and reservations on Cover Manager and TheFork.",
     twitterDescription:
-      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Reservations on TheFork.",
+      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Reservations on Cover Manager and TheFork.",
   },
   skipLink: "Skip to content",
   brandAriaLabel: "Ocote, home",
@@ -30,7 +30,8 @@ export const en = {
     eyebrow: "Charcoal taquería · Madrid",
     lede:
       "Slow fire, handmade tortillas and mezcal done right. A direct bridge from market to table.",
-    book: "Book on TheFork",
+    bookDirect: "Book directly",
+    bookThefork: "TheFork",
     story: "Our story",
     imgAlt: "Light, texture and colour in the dining room",
     scroll: "Scroll",
@@ -70,19 +71,19 @@ export const en = {
   hours: {
     title: "Hours",
     mon: "Monday",
-    monHours: "13:00–16:00 · 19:00–00:00",
+    monHours: "14:00–17:00 · 20:00–00:00",
     tue: "Tuesday",
-    tueHours: "Closed",
+    tueHours: "14:00–17:00 · 20:00–00:00",
     wed: "Wednesday",
-    wedHours: "13:00–16:00 · 19:00–00:00",
+    wedHours: "14:00–00:00",
     thu: "Thursday",
-    thuHours: "13:00–02:00",
+    thuHours: "14:00–01:00",
     fri: "Friday",
-    friHours: "13:00–02:00",
+    friHours: "14:00–01:00",
     sat: "Saturday",
-    satHours: "13:00–02:00",
+    satHours: "14:00–01:00",
     sun: "Sunday",
-    sunHours: "13:00–00:00",
+    sunHours: "14:00–00:00",
     closed: "Closed",
   },
   menu: {
@@ -339,8 +340,20 @@ export const en = {
     kicker: "Reservations",
     titleHtml: 'We\'ll save you a <span class="cta__accent">seat</span>.',
     text:
-      "Reservations are managed centrally on TheFork. You can also call our landline or message us on WhatsApp.",
-    book: "Book on TheFork",
+      "Pick the booking engine you prefer: book directly with us or through TheFork. You can also call our landline or message us on WhatsApp.",
+    directKicker: "Cover Manager",
+    directName: "Direct booking",
+    directText:
+      "Book a table on the restaurant’s own system. Instant confirmation, no middleman.",
+    directBook: "Book here",
+    theforkKicker: "TheFork",
+    theforkName: "Online booking",
+    theforkText: "Book through TheFork — handy if you already have an account or Yums.",
+    theforkBook: "Book on TheFork",
+    coverModalKicker: "Direct booking",
+    coverModalTitle: "Book a table",
+    coverClose: "Close",
+    coverIframeTitle: "Cover Manager reservations",
     landlineKicker: "Landline",
     call: "Call",
     callAria: "Call the landline 912 32 63 69",
@@ -348,7 +361,7 @@ export const en = {
     whatsappAction: "Message",
     whatsappAria: "Message us on WhatsApp at +34 647 22 96 46",
     directions: "Get directions",
-    reservationsNote: "Reservations on TheFork",
+    reservationsNote: "Reservations on Cover Manager and TheFork",
   },
   footer: {
     tagline: "Charcoal taquería · Calle Libertad, 5, Madrid.",
@@ -365,7 +378,7 @@ export const en = {
   cookies: {
     bannerAria: "Cookie notice",
     bannerHtml:
-      'We use essential cookies and, if you accept, preference cookies (fonts) and analytics. Reservations are handled on TheFork when you tap the external link. <a href="/politica-cookies.html">More information</a>',
+      'We use essential cookies and, if you accept, preference cookies (fonts) and analytics. Reservations are handled on Cover Manager or TheFork when you tap the corresponding button. <a href="/politica-cookies.html">More information</a>',
     reject: "Essential only",
     configure: "Settings",
     accept: "Accept all",

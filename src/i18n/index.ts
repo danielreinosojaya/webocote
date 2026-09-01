@@ -3,6 +3,7 @@ import { en } from "./locales/en";
 import { es } from "./locales/es";
 
 export type Locale = "es" | "en";
+export const LOCALE_EVENT = "ocote:locale";
 
 const STORAGE_KEY = "ocote_locale";
 const locales = { es, en };
@@ -77,8 +78,14 @@ function applyBindings(locale: Locale) {
   const footerLegal = document.querySelector(".site-footer__legal");
   if (footerLegal) {
     const year = String(new Date().getFullYear());
-    footerLegal.innerHTML = `© <span data-year>${year}</span> Ocote. ${t("footer.madeWith", locale)}`;
+    footerLegal.innerHTML = `ù <span data-year>${year}</span> Ocote. ${t("footer.madeWith", locale)}`;
   }
+}
+
+let currentLocale: Locale = "es";
+
+export function getCurrentLocale(): Locale {
+  return currentLocale;
 }
 
 export function applyLocale(locale: Locale) {
@@ -87,8 +94,8 @@ export function applyLocale(locale: Locale) {
   updateMeta(locale);
   updateLangSwitcher(locale);
   localStorage.setItem(STORAGE_KEY, locale);
+  document.dispatchEvent(new CustomEvent<Locale>(LOCALE_EVENT, { detail: locale }));
 }
-let currentLocale: Locale = "es";
 
 export function initI18n() {
   currentLocale = getLocale();

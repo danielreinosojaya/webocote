@@ -14,4 +14,8 @@ interface Window {
   dataLayer?: unknown[];
   fbq?: (...args: unknown[]) => void;
   _fbq?: unknown;
+  iFrameResize?: (
+    options?: Record<string, unknown>,
+    target?: HTMLElement | string,
+  ) => void;
 }

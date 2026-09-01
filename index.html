@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="Restaurante mexicano en Chueca (Calle Libertad, 5). Tacos a la brasa, mezcal, cócteles y vinos naturales. Horarios, carta y reservas online en TheFork."
+      content="Restaurante mexicano en Chueca (Calle Libertad, 5). Tacos a la brasa, mezcal, cócteles y vinos naturales. Horarios, carta y reservas online en Cover Manager y TheFork."
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Ocote Madrid" />
@@ -19,7 +19,7 @@
     <meta property="og:title" content="Ocote Madrid | Restaurante mexicano de brasa en Chueca" />
     <meta
       property="og:description"
-      content="Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Horarios, carta y reservas en TheFork."
+      content="Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Horarios, carta y reservas en Cover Manager y TheFork."
     />
     <meta property="og:url" content="https://www.ocote.es/" />
     <meta property="og:image" content="https://www.ocote.es/web/media/og-share.jpg" />
@@ -31,7 +31,7 @@
     <meta name="twitter:title" content="Ocote Madrid | Restaurante mexicano de brasa en Chueca" />
     <meta
       name="twitter:description"
-      content="Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Reservas en TheFork."
+      content="Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Reservas en Cover Manager y TheFork."
     />
     <meta name="twitter:image" content="https://www.ocote.es/web/media/og-share.jpg" />
     <meta name="twitter:image:alt" content="Ocote Madrid — restaurante mexicano de brasa en Chueca" />
@@ -97,45 +97,63 @@
         "openingHoursSpecification": [
           {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Wednesday"],
-            "opens": "13:00",
-            "closes": "16:00"
+            "dayOfWeek": ["Monday", "Tuesday"],
+            "opens": "14:00",
+            "closes": "17:00"
           },
           {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Wednesday"],
-            "opens": "19:00",
+            "dayOfWeek": ["Monday", "Tuesday"],
+            "opens": "20:00",
+            "closes": "24:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Wednesday", "Sunday"],
+            "opens": "14:00",
             "closes": "24:00"
           },
           {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": ["Thursday", "Friday", "Saturday"],
-            "opens": "13:00",
-            "closes": "02:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Sunday"],
-            "opens": "13:00",
-            "closes": "24:00"
+            "opens": "14:00",
+            "closes": "01:00"
           }
         ],
-        "potentialAction": {
-          "@type": "ReserveAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9",
-            "inLanguage": "es-ES",
-            "actionPlatform": [
-              "https://schema.org/DesktopWebPlatform",
-              "https://schema.org/MobileWebPlatform"
-            ]
+        "potentialAction": [
+          {
+            "@type": "ReserveAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.covermanager.com/reservation/module_restaurant/restaurante-ocote/spanish",
+              "inLanguage": "es-ES",
+              "actionPlatform": [
+                "https://schema.org/DesktopWebPlatform",
+                "https://schema.org/MobileWebPlatform"
+              ]
+            },
+            "result": {
+              "@type": "FoodEstablishmentReservation",
+              "name": "Reservar mesa en Ocote Madrid"
+            }
           },
-          "result": {
-            "@type": "FoodEstablishmentReservation",
-            "name": "Reservar mesa en Ocote Madrid"
+          {
+            "@type": "ReserveAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9",
+              "inLanguage": "es-ES",
+              "actionPlatform": [
+                "https://schema.org/DesktopWebPlatform",
+                "https://schema.org/MobileWebPlatform"
+              ]
+            },
+            "result": {
+              "@type": "FoodEstablishmentReservation",
+              "name": "Reservar mesa en Ocote Madrid (TheFork)"
+            }
           }
-        }
+        ]
       }
     </script>
   </head>
@@ -173,7 +191,7 @@
             <button type="button" class="lang-switch__btn is-active" data-lang="es" aria-pressed="true">ES</button>
             <button type="button" class="lang-switch__btn" data-lang="en" aria-pressed="false">EN</button>
           </div>
-          <a class="btn btn--ghost site-header__cta" href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9" target="_blank" rel="noopener noreferrer">Reservar mesa</a>
+          <a class="btn btn--ghost site-header__cta" href="#mesa">Reservar mesa</a>
         </div>
       </header>
     </div>
@@ -213,7 +231,15 @@
             directo entre el mercado y la mesa.
           </p>
           <div class="hero__actions" data-reveal>
-            <a class="btn btn--primary" href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9" target="_blank" rel="noopener noreferrer">Reservar en TheFork</a>
+            <button type="button" class="btn btn--primary" data-cover-open>Reserva directa</button>
+            <a
+              class="btn btn--ghost"
+              data-engine="thefork"
+              href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9"
+              target="_blank"
+              rel="noopener noreferrer"
+              >TheFork</a
+            >
             <a class="btn btn--link" href="#experiencia">Ver historia</a>
           </div>
         </div>
@@ -313,31 +339,31 @@
         <div class="hours-card" data-reveal>
           <div class="hours-row">
             <span>Lunes</span>
-            <span>13:00–16:00 · 19:00–00:00</span>
+            <span>14:00–17:00 · 20:00–00:00</span>
           </div>
           <div class="hours-row">
             <span>Martes</span>
-            <span>Cerrado</span>
+            <span>14:00–17:00 · 20:00–00:00</span>
           </div>
           <div class="hours-row">
             <span>Miércoles</span>
-            <span>13:00–16:00 · 19:00–00:00</span>
+            <span>14:00–00:00</span>
           </div>
           <div class="hours-row">
             <span>Jueves</span>
-            <span>13:00–02:00</span>
+            <span>14:00–01:00</span>
           </div>
           <div class="hours-row">
             <span>Viernes</span>
-            <span>13:00–02:00</span>
+            <span>14:00–01:00</span>
           </div>
           <div class="hours-row">
             <span>Sábado</span>
-            <span>13:00–02:00</span>
+            <span>14:00–01:00</span>
           </div>
           <div class="hours-row">
             <span>Domingo</span>
-            <span>13:00–00:00</span>
+            <span>14:00–00:00</span>
           </div>
         </div>
       </section>
@@ -801,17 +827,46 @@
             Te guardamos <span class="cta__accent">lugar</span>.
           </h2>
           <p class="cta__text" data-reveal>
-            La gestión de reservas está centralizada en TheFork. También puedes
-            llamarnos al fijo o escribirnos por WhatsApp.
+            Elige el motor que prefieras: reserva directa con nosotros o a través
+            de TheFork. También puedes llamarnos al fijo o escribirnos por WhatsApp.
           </p>
-          <div class="cta__actions" data-reveal>
-            <a
-              class="btn btn--primary"
-              href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Reservar en TheFork</a
-            >
+          <div class="cta__engines" data-reveal>
+            <article class="cta__engine cta__engine--cover">
+              <svg class="cta__engine-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"
+                />
+              </svg>
+              <p class="cta__engine-kicker">Cover Manager</p>
+              <h3 class="cta__engine-name">Reserva directa</h3>
+              <p class="cta__engine-text">
+                Reserva mesa en el motor del restaurante. Confirmación inmediata,
+                sin intermediarios.
+              </p>
+              <button type="button" class="btn btn--primary" data-cover-open>Reservar aquí</button>
+            </article>
+            <article class="cta__engine cta__engine--thefork">
+              <svg class="cta__engine-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M11.5 2c.55 0 1 .45 1 1v7.25c1.38-.32 2.5-1.5 2.5-3.25V4.5c0-.28.22-.5.5-.5s.5.22.5.5V7c0 2.4-1.5 4.4-3.5 5.2V21c0 .55-.45 1-1 1s-1-.45-1-1v-8.8C8.5 11.4 7 9.4 7 7V4.5c0-.28.22-.5.5-.5s.5.22.5.5V7c0 1.75 1.12 2.93 2.5 3.25V3c0-.55.45-1 1-1z"
+                />
+              </svg>
+              <p class="cta__engine-kicker">TheFork</p>
+              <h3 class="cta__engine-name">Reserva online</h3>
+              <p class="cta__engine-text">
+                Reserva a través de TheFork. Ideal si ya tienes cuenta o Yums.
+              </p>
+              <a
+                class="btn btn--ghost"
+                data-engine="thefork"
+                href="https://widget.thefork.com/06c06665-2552-47d4-974f-757e465a5ff9"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Reservar en TheFork</a
+              >
+            </article>
           </div>
           <div class="cta__channels" data-reveal>
             <a
@@ -858,7 +913,7 @@
               rel="noopener noreferrer"
               >Cómo llegar</a
             >
-            · <span>Reservas en TheFork</span>
+            · <span>Reservas en Cover Manager y TheFork</span>
           </address>
         </div>
       </section>
@@ -889,12 +944,34 @@
       <p class="site-footer__legal">© <span data-year></span> Ocote. Hecho con fuego.</p>
     </footer>
 
+    <dialog id="cover-modal" class="cover-modal" aria-labelledby="cover-modal-title">
+      <div class="cover-modal__panel">
+        <header class="cover-modal__header">
+          <div>
+            <p class="cover-modal__kicker">Reserva directa</p>
+            <h2 id="cover-modal-title">Reservar mesa</h2>
+          </div>
+          <button type="button" class="cover-modal__close" data-cover-close aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </header>
+        <div class="cover-modal__frame-wrap">
+          <iframe
+            id="restaurante-ocote"
+            class="cover-modal__iframe"
+            title="Reservas Cover Manager"
+            allow="payment"
+          ></iframe>
+        </div>
+      </div>
+    </dialog>
+
     <aside id="cookie-banner" class="cookie-banner" hidden aria-label="Aviso de cookies">
       <div class="cookie-banner__inner">
         <p class="cookie-banner__text">
           Usamos cookies técnicas propias y, si lo aceptas, cookies de preferencias
-          (tipografías) y analítica. Las reservas se gestionan en TheFork al pulsar el
-          enlace externo.
+          (tipografías) y analítica. Las reservas se gestionan en Cover Manager o
+          TheFork al pulsar el botón correspondiente.
           <a href="/politica-cookies.html">Más información</a>
         </p>
         <div class="cookie-banner__actions">

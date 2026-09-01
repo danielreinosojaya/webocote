@@ -1,5 +1,6 @@
 import Lenis from "lenis";
 import { initCookieConsent } from "./cookies";
+import { initCoverManager } from "./cover-manager";
 import { initI18n } from "./i18n";
 import "./style.css";
 
@@ -54,6 +55,11 @@ if (useLenis) {
   }
   requestAnimationFrame(raf);
 }
+
+initCoverManager({
+  onOpen: () => lenis?.stop(),
+  onClose: () => lenis?.start(),
+});
 
 /* Header + layout */
 function updateHeader() {

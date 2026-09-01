@@ -2,12 +2,12 @@ export const es = {
   meta: {
     title: "Ocote Madrid | Restaurante mexicano de brasa y tacos en Chueca",
     description:
-      "Restaurante mexicano en Chueca (Calle Libertad, 5). Tacos a la brasa, mezcal, cócteles y vinos naturales. Horarios, carta y reservas online en TheFork.",
+      "Restaurante mexicano en Chueca (Calle Libertad, 5). Tacos a la brasa, mezcal, cócteles y vinos naturales. Horarios, carta y reservas online en Cover Manager y TheFork.",
     ogTitle: "Ocote Madrid | Restaurante mexicano de brasa en Chueca",
     ogDescription:
-      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Horarios, carta y reservas en TheFork.",
+      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Horarios, carta y reservas en Cover Manager y TheFork.",
     twitterDescription:
-      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Reservas en TheFork.",
+      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Reservas en Cover Manager y TheFork.",
   },
   skipLink: "Saltar al contenido",
   brandAriaLabel: "Ocote, inicio",
@@ -30,7 +30,8 @@ export const es = {
     eyebrow: "Taquería de brasa · Madrid",
     lede:
       "Fuego lento, tortillas hechas a mano y mezcal bien puesto. Un puente directo entre el mercado y la mesa.",
-    book: "Reservar en TheFork",
+    bookDirect: "Reserva directa",
+    bookThefork: "TheFork",
     story: "Ver historia",
     imgAlt: "Luz, textura y color en el salón",
     scroll: "Scroll",
@@ -70,19 +71,19 @@ export const es = {
   hours: {
     title: "Horarios",
     mon: "Lunes",
-    monHours: "13:00–16:00 · 19:00–00:00",
+    monHours: "14:00–17:00 · 20:00–00:00",
     tue: "Martes",
-    tueHours: "Cerrado",
+    tueHours: "14:00–17:00 · 20:00–00:00",
     wed: "Miércoles",
-    wedHours: "13:00–16:00 · 19:00–00:00",
+    wedHours: "14:00–00:00",
     thu: "Jueves",
-    thuHours: "13:00–02:00",
+    thuHours: "14:00–01:00",
     fri: "Viernes",
-    friHours: "13:00–02:00",
+    friHours: "14:00–01:00",
     sat: "Sábado",
-    satHours: "13:00–02:00",
+    satHours: "14:00–01:00",
     sun: "Domingo",
-    sunHours: "13:00–00:00",
+    sunHours: "14:00–00:00",
     closed: "Cerrado",
   },
   menu: {
@@ -339,8 +340,20 @@ export const es = {
     kicker: "Reservas",
     titleHtml: 'Te guardamos <span class="cta__accent">lugar</span>.',
     text:
-      "La gestión de reservas está centralizada en TheFork. También puedes llamarnos al fijo o escribirnos por WhatsApp.",
-    book: "Reservar en TheFork",
+      "Elige el motor que prefieras: reserva directa con nosotros o a través de TheFork. También puedes llamarnos al fijo o escribirnos por WhatsApp.",
+    directKicker: "Cover Manager",
+    directName: "Reserva directa",
+    directText:
+      "Reserva mesa en el motor del restaurante. Confirmación inmediata, sin intermediarios.",
+    directBook: "Reservar aquí",
+    theforkKicker: "TheFork",
+    theforkName: "Reserva online",
+    theforkText: "Reserva a través de TheFork. Ideal si ya tienes cuenta o Yums.",
+    theforkBook: "Reservar en TheFork",
+    coverModalKicker: "Reserva directa",
+    coverModalTitle: "Reservar mesa",
+    coverClose: "Cerrar",
+    coverIframeTitle: "Reservas Cover Manager",
     landlineKicker: "Fijo",
     call: "Llamar",
     callAria: "Llamar al fijo 912 32 63 69",
@@ -348,7 +361,7 @@ export const es = {
     whatsappAction: "Escribir",
     whatsappAria: "Escribir por WhatsApp al +34 647 22 96 46",
     directions: "Cómo llegar",
-    reservationsNote: "Reservas en TheFork",
+    reservationsNote: "Reservas en Cover Manager y TheFork",
   },
   footer: {
     tagline: "Taquería de brasa · Calle Libertad, 5, Madrid.",
@@ -365,7 +378,7 @@ export const es = {
   cookies: {
     bannerAria: "Aviso de cookies",
     bannerHtml:
-      'Usamos cookies técnicas propias y, si lo aceptas, cookies de preferencias (tipografías) y analítica. Las reservas se gestionan en TheFork al pulsar el enlace externo. <a href="/politica-cookies.html">Más información</a>',
+      'Usamos cookies técnicas propias y, si lo aceptas, cookies de preferencias (tipografías) y analítica. Las reservas se gestionan en Cover Manager o TheFork al pulsar el botón correspondiente. <a href="/politica-cookies.html">Más información</a>',
     reject: "Solo necesarias",
     configure: "Configurar",
     accept: "Aceptar todas",
