@@ -104,8 +104,8 @@ export const bindings: I18nBinding[] = [
   { type: "text", selector: "#menu-tacos li:nth-child(4) .menu-item__meta", key: "menu.tacos.ribEye.meta" },
   { type: "text", selector: "#menu-tacos li:nth-child(5) .menu-item__title", key: "menu.tacos.campechito.title" },
   { type: "text", selector: "#menu-tacos li:nth-child(5) .menu-item__meta", key: "menu.tacos.campechito.meta" },
-  { type: "text", selector: "#menu-tacos li:nth-child(6) .menu-item__title", key: "menu.tacos.pocChuk.title" },
-  { type: "text", selector: "#menu-tacos li:nth-child(6) .menu-item__meta", key: "menu.tacos.pocChuk.meta" },
+  { type: "text", selector: "#menu-tacos li:nth-child(6) .menu-item__title", key: "menu.tacos.pucChuc.title" },
+  { type: "text", selector: "#menu-tacos li:nth-child(6) .menu-item__meta", key: "menu.tacos.pucChuc.meta" },
   { type: "text", selector: "#menu-tacos li:nth-child(7) .menu-item__title", key: "menu.tacos.hongos.title" },
   { type: "text", selector: "#menu-tacos li:nth-child(7) .menu-item__meta", key: "menu.tacos.hongos.meta" },
 

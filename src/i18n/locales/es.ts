@@ -155,8 +155,8 @@ export const es = {
         meta: "Txistorra de Navarra, cebolla, cilantro y torreznos troceados",
         price: "6€",
       },
-      pocChuk: {
-        title: "Taco de Poc Chuk de Secreto Ibérico",
+      pucChuc: {
+        title: "Taco de Puc Chuc de Secreto Ibérico",
         meta: "Encurtido de cebolla morada tatemada",
         price: "5,50€",
       },

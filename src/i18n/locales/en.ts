@@ -155,8 +155,8 @@ export const en = {
         meta: "Navarra pork chorizo (txistorra), onion, cilantro and diced pork crackling",
         price: "€6",
       },
-      pocChuk: {
-        title: "Iberian pork poc chuc taco",
+      pucChuc: {
+        title: "Iberian pork Puc Chuc taco",
         meta: "Charred red-onion pickle",
         price: "€5.50",
       },
