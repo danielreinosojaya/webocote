@@ -114,7 +114,12 @@ export const en = {
       guacamole: {
         title: "Real guacamole",
         meta: "Served with totopos",
-        price: "€10",
+        price: "€12",
+      },
+      guacamolePanceta: {
+        title: "Real guacamole + smoked pork belly (Ufff)",
+        meta: "Served with totopos",
+        price: "€16",
       },
       frijoles: {
         title: "Gratinéed braised beans",
@@ -125,7 +130,7 @@ export const en = {
         title: "Loaded fries (beef & bacon)",
         meta:
           "Grilled beef, bacon, melted cheese mix, guacamole, salsa of your choice, pickled onions and cilantro sprouts",
-        price: "€12.50",
+        price: "€14",
       },
     },
     tacos: {
@@ -133,37 +138,37 @@ export const en = {
       asadaTocino: {
         title: "Grilled beef & bacon taco",
         meta: "Served with plenty of avocado",
-        price: "€6",
+        price: "€7",
       },
       newYork: {
         title: "Beef New York-style taco",
         meta: "Onion, cilantro, fresh cheese and avocado",
-        price: "€7",
+        price: "€8",
       },
       porkBelly: {
         title: "Crispy pork belly taco",
         meta: "Red onion and charred pickled peppers",
-        price: "€5",
+        price: "€6",
       },
       ribEye: {
         title: "Premium beef rib eye taco",
         meta: "60 g of prime beef",
-        price: "€8",
+        price: "€9",
       },
       campechito: {
         title: "Beef & pork campechana taco",
         meta: "Navarra pork chorizo (txistorra), onion, cilantro and diced pork crackling",
-        price: "€6",
+        price: "€6.50",
       },
       pucChuc: {
         title: "Iberian pork Puc Chuc taco",
         meta: "Charred red-onion pickle",
-        price: "€5.50",
+        price: "€6",
       },
       hongos: {
         title: "Garlic mushroom taco",
         meta: "Pasilla chilli, fresh cheese and cilantro sprouts · vegetarian",
-        price: "€5",
+        price: "€6",
       },
     },
     desserts: {

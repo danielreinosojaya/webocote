@@ -114,7 +114,12 @@ export const es = {
       guacamole: {
         title: "Guacamole Real",
         meta: "Servido con tostaditas",
-        price: "10€",
+        price: "12€",
+      },
+      guacamolePanceta: {
+        title: "Guacamole Real + Pancetita de Cerdo Ahumada (Ufff)",
+        meta: "Servido con tostaditas",
+        price: "16€",
       },
       frijoles: {
         title: "Frijoles maneados gratinados",
@@ -125,7 +130,7 @@ export const es = {
         title: "Papas Puercas",
         meta:
           "Carne asada y tocino, mix de quesos derretidos, guacamole, salsa de tu elección, cebollas encurtidas y brotes de cilantro",
-        price: "12,50€",
+        price: "14€",
       },
     },
     tacos: {
@@ -133,37 +138,37 @@ export const es = {
       asadaTocino: {
         title: "Taco de Asada con tocino",
         meta: "Servido con un chingo de aguacate",
-        price: "6€",
+        price: "7€",
       },
       newYork: {
         title: "Taco de New York",
         meta: "Cebolla, cilantro, queso fresco y aguacate",
-        price: "7€",
+        price: "8€",
       },
       porkBelly: {
         title: "Taco de Pork Belly crujiente",
         meta: "Cebolla morada y pimientos tatemados encurtidos",
-        price: "5€",
+        price: "6€",
       },
       ribEye: {
         title: "Taco de Rib Eye Gran Selección",
         meta: "60 grs de pura chulada vacuna",
-        price: "8€",
+        price: "9€",
       },
       campechito: {
         title: "Taco Campechito de Asada",
         meta: "Txistorra de Navarra, cebolla, cilantro y torreznos troceados",
-        price: "6€",
+        price: "6,50€",
       },
       pucChuc: {
         title: "Taco de Puc Chuc de Secreto Ibérico",
         meta: "Encurtido de cebolla morada tatemada",
-        price: "5,50€",
+        price: "6€",
       },
       hongos: {
         title: "Taco de Hongos al ajillo",
         meta: "Chile pasilla, queso fresco y brotes de cilantro",
-        price: "5€",
+        price: "6€",
       },
     },
     desserts: {
