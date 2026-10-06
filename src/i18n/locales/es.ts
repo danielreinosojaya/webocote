@@ -2,12 +2,12 @@ export const es = {
   meta: {
     title: "Ocote Madrid | Restaurante mexicano de brasa y tacos en Chueca",
     description:
-      "Restaurante mexicano en Chueca (Calle Libertad, 5). Tacos a la brasa, mezcal, cócteles y vinos naturales. Horarios, carta y reservas online en Cover Manager y TheFork.",
+      "Restaurante mexicano en Chueca (Calle Libertad, 5). Tacos a la brasa, mezcal, cócteles y vinos naturales. Horarios, carta y reservas online en Cover Manager.",
     ogTitle: "Ocote Madrid | Restaurante mexicano de brasa en Chueca",
     ogDescription:
-      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Horarios, carta y reservas en Cover Manager y TheFork.",
+      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Horarios, carta y reservas en Cover Manager.",
     twitterDescription:
-      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Reservas en Cover Manager y TheFork.",
+      "Tacos a la brasa, mezcal y barra mexicana en Calle Libertad, 5. Reservas en Cover Manager.",
   },
   skipLink: "Saltar al contenido",
   brandAriaLabel: "Ocote, inicio",
@@ -31,7 +31,6 @@ export const es = {
     lede:
       "Fuego lento, tortillas hechas a mano y mezcal bien puesto. Un puente directo entre el mercado y la mesa.",
     bookDirect: "Reserva directa",
-    bookThefork: "TheFork",
     story: "Ver historia",
     imgAlt: "Luz, textura y color en el salón",
     scroll: "Scroll",
@@ -345,16 +344,11 @@ export const es = {
     kicker: "Reservas",
     titleHtml: 'Te guardamos <span class="cta__accent">lugar</span>.',
     text:
-      "Elige el motor que prefieras: reserva directa con nosotros o a través de TheFork. También puedes llamarnos al fijo o escribirnos por WhatsApp.",
+      "Reserva tu mesa con nosotros. También puedes llamarnos al fijo o escribirnos por WhatsApp.",
     directKicker: "Cover Manager",
     directName: "Reserva directa",
-    directText:
-      "Reserva mesa en el motor del restaurante. Confirmación inmediata, sin intermediarios.",
+    directText: "Elige fecha, hora y comensales. Confirmación inmediata.",
     directBook: "Reservar aquí",
-    theforkKicker: "TheFork",
-    theforkName: "Reserva online",
-    theforkText: "Reserva a través de TheFork. Ideal si ya tienes cuenta o Yums.",
-    theforkBook: "Reservar en TheFork",
     coverModalKicker: "Reserva directa",
     coverModalTitle: "Reservar mesa",
     coverClose: "Cerrar",
@@ -366,7 +360,7 @@ export const es = {
     whatsappAction: "Escribir",
     whatsappAria: "Escribir por WhatsApp al +34 647 22 96 46",
     directions: "Cómo llegar",
-    reservationsNote: "Reservas en Cover Manager y TheFork",
+    reservationsNote: "Reservas en Cover Manager",
   },
   footer: {
     tagline: "Taquería de brasa · Calle Libertad, 5, Madrid.",
@@ -383,7 +377,7 @@ export const es = {
   cookies: {
     bannerAria: "Aviso de cookies",
     bannerHtml:
-      'Usamos cookies técnicas propias y, si lo aceptas, cookies de preferencias (tipografías) y analítica. Las reservas se gestionan en Cover Manager o TheFork al pulsar el botón correspondiente. <a href="/politica-cookies.html">Más información</a>',
+      'Usamos cookies técnicas propias y, si lo aceptas, cookies de preferencias (tipografías) y analítica. Las reservas se gestionan en Cover Manager al pulsar el botón correspondiente. <a href="/politica-cookies.html">Más información</a>',
     reject: "Solo necesarias",
     configure: "Configurar",
     accept: "Aceptar todas",

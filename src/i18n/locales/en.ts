@@ -2,12 +2,12 @@ export const en = {
   meta: {
     title: "Ocote Madrid | Charcoal-grilled Mexican restaurant & tacos in Chueca",
     description:
-      "Mexican restaurant in Chueca (Calle Libertad, 5). Charcoal-grilled tacos, mezcal, cocktails and natural wines. Hours, menu and online reservations on Cover Manager and TheFork.",
+      "Mexican restaurant in Chueca (Calle Libertad, 5). Charcoal-grilled tacos, mezcal, cocktails and natural wines. Hours, menu and online reservations on Cover Manager.",
     ogTitle: "Ocote Madrid | Charcoal-grilled Mexican restaurant in Chueca",
     ogDescription:
-      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Hours, menu and reservations on Cover Manager and TheFork.",
+      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Hours, menu and reservations on Cover Manager.",
     twitterDescription:
-      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Reservations on Cover Manager and TheFork.",
+      "Charcoal-grilled tacos, mezcal and Mexican bar in Calle Libertad, 5. Reservations on Cover Manager.",
   },
   skipLink: "Skip to content",
   brandAriaLabel: "Ocote, home",
@@ -31,7 +31,6 @@ export const en = {
     lede:
       "Slow fire, handmade tortillas and mezcal done right. A direct bridge from market to table.",
     bookDirect: "Book directly",
-    bookThefork: "TheFork",
     story: "Our story",
     imgAlt: "Light, texture and colour in the dining room",
     scroll: "Scroll",
@@ -345,16 +344,11 @@ export const en = {
     kicker: "Reservations",
     titleHtml: 'We\'ll save you a <span class="cta__accent">seat</span>.',
     text:
-      "Pick the booking engine you prefer: book directly with us or through TheFork. You can also call our landline or message us on WhatsApp.",
+      "Book your table with us. You can also call our landline or message us on WhatsApp.",
     directKicker: "Cover Manager",
     directName: "Direct booking",
-    directText:
-      "Book a table on the restaurant’s own system. Instant confirmation, no middleman.",
+    directText: "Pick the date, time and party size. Instant confirmation.",
     directBook: "Book here",
-    theforkKicker: "TheFork",
-    theforkName: "Online booking",
-    theforkText: "Book through TheFork — handy if you already have an account or Yums.",
-    theforkBook: "Book on TheFork",
     coverModalKicker: "Direct booking",
     coverModalTitle: "Book a table",
     coverClose: "Close",
@@ -366,7 +360,7 @@ export const en = {
     whatsappAction: "Message",
     whatsappAria: "Message us on WhatsApp at +34 647 22 96 46",
     directions: "Get directions",
-    reservationsNote: "Reservations on Cover Manager and TheFork",
+    reservationsNote: "Reservations on Cover Manager",
   },
   footer: {
     tagline: "Charcoal taquería · Calle Libertad, 5, Madrid.",
@@ -383,7 +377,7 @@ export const en = {
   cookies: {
     bannerAria: "Cookie notice",
     bannerHtml:
-      'We use essential cookies and, if you accept, preference cookies (fonts) and analytics. Reservations are handled on Cover Manager or TheFork when you tap the corresponding button. <a href="/politica-cookies.html">More information</a>',
+      'We use essential cookies and, if you accept, preference cookies (fonts) and analytics. Reservations are handled on Cover Manager when you tap the corresponding button. <a href="/politica-cookies.html">More information</a>',
     reject: "Essential only",
     configure: "Settings",
     accept: "Accept all",
