@@ -117,7 +117,6 @@ export const es = {
       },
       guacamolePanceta: {
         title: "Guacamole Real + Pancetita de Cerdo Ahumada (Ufff)",
-        meta: "Servido con tostaditas",
         price: "16€",
       },
       frijoles: {

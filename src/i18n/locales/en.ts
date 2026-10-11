@@ -117,7 +117,6 @@ export const en = {
       },
       guacamolePanceta: {
         title: "Real guacamole + smoked pork belly (Ufff)",
-        meta: "Served with totopos",
         price: "€16",
       },
       frijoles: {

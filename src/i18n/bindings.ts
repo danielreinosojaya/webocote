@@ -88,7 +88,6 @@ export const bindings: I18nBinding[] = [
   { type: "text", selector: "#menu-empezar li:nth-child(1) .menu-item__title", key: "menu.starters.guacamole.title" },
   { type: "text", selector: "#menu-empezar li:nth-child(1) .menu-item__meta", key: "menu.starters.guacamole.meta" },
   { type: "text", selector: "#menu-empezar li:nth-child(2) .menu-item__title", key: "menu.starters.guacamolePanceta.title" },
-  { type: "text", selector: "#menu-empezar li:nth-child(2) .menu-item__meta", key: "menu.starters.guacamolePanceta.meta" },
   { type: "text", selector: "#menu-empezar li:nth-child(3) .menu-item__title", key: "menu.starters.frijoles.title" },
   { type: "text", selector: "#menu-empezar li:nth-child(3) .menu-item__meta", key: "menu.starters.frijoles.meta" },
   { type: "text", selector: "#menu-empezar li:nth-child(4) .menu-item__title", key: "menu.starters.papasPuercas.title" },
